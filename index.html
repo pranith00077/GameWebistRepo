@@ -42,7 +42,6 @@ body{
   overflow-x:hidden;
 }
 
-/* ── NOISE TEXTURE OVERLAY ── */
 body::before{
   content:'';
   position:fixed;inset:0;
@@ -50,7 +49,6 @@ body::before{
   pointer-events:none;z-index:1;opacity:.5;
 }
 
-/* ── AMBIENT BACKGROUND ── */
 body::after{
   content:'';
   position:fixed;inset:0;
@@ -74,7 +72,7 @@ body::after{
   padding:0 28px;
 }
 
-/* ── LEFT: HAMBURGER ── */
+/* LEFT: HAMBURGER */
 .ham-btn{
   width:44px;height:44px;
   background:var(--surface);
@@ -100,14 +98,160 @@ body::after{
 .ham-btn.open span:nth-child(2){opacity:0;transform:scaleX(0)}
 .ham-btn.open span:nth-child(3){transform:translateY(-6.5px) rotate(-45deg)}
 
-/* ── RIGHT: LOGO ── */
+/* CENTER: MY SITES DROPDOWN */
+.nav-center{
+  position:relative;
+  display:flex;align-items:center;
+}
+
+.sites-btn{
+  display:flex;align-items:center;gap:8px;
+  padding:9px 18px;
+  background:rgba(61,127,255,0.06);
+  border:1px solid var(--border2);
+  border-radius:100px;
+  color:var(--accent2);
+  font-family:'DM Sans',sans-serif;
+  font-size:.78rem;font-weight:500;
+  letter-spacing:.1em;text-transform:uppercase;
+  cursor:pointer;
+  transition:background .25s,border-color .25s,color .25s,transform .2s;
+  white-space:nowrap;
+}
+.sites-btn:hover{
+  background:rgba(61,127,255,0.12);
+  border-color:var(--border3);
+  color:var(--white);
+  transform:scale(1.03);
+}
+.sites-btn-dot{
+  width:6px;height:6px;border-radius:50%;
+  background:var(--accent2);
+  box-shadow:0 0 8px rgba(111,163,255,.8);
+  flex-shrink:0;
+}
+.sites-caret{
+  width:14px;height:14px;
+  fill:none;stroke:currentColor;
+  stroke-width:2;stroke-linecap:round;stroke-linejoin:round;
+  transition:transform .28s cubic-bezier(.4,0,.2,1);
+  flex-shrink:0;
+}
+.sites-btn.open .sites-caret{transform:rotate(180deg)}
+
+/* DROPDOWN MENU */
+.sites-dropdown{
+  position:absolute;
+  top:calc(100% + 12px);
+  left:50%;transform:translateX(-50%) translateY(-6px);
+  min-width:280px;
+  background:var(--bg2);
+  border:1px solid var(--border2);
+  border-radius:20px;
+  padding:10px;
+  z-index:950;
+  opacity:0;pointer-events:none;
+  transition:opacity .25s,transform .28s cubic-bezier(.34,1.4,.64,1);
+  box-shadow:0 20px 60px rgba(0,0,0,.55),0 0 0 1px rgba(61,127,255,.08);
+  overflow:hidden;
+}
+/* top accent line */
+.sites-dropdown::before{
+  content:'';
+  position:absolute;top:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,transparent,var(--accent),var(--accent2),transparent);
+}
+.sites-dropdown.open{
+  opacity:1;pointer-events:all;
+  transform:translateX(-50%) translateY(0);
+}
+
+/* dropdown header label */
+.sites-dd-label{
+  font-size:.6rem;font-weight:500;letter-spacing:.3em;text-transform:uppercase;
+  color:var(--accent2);opacity:.6;
+  padding:4px 12px 10px;
+  display:block;
+}
+
+/* each site row */
+.site-item{
+  display:flex;align-items:center;gap:12px;
+  padding:10px 12px;
+  border-radius:12px;
+  border:1px solid transparent;
+  text-decoration:none;
+  color:var(--cream);
+  transition:background .2s,border-color .2s,transform .2s;
+  position:relative;overflow:hidden;
+}
+.site-item:hover{
+  background:rgba(61,127,255,0.07);
+  border-color:var(--border);
+  transform:translateX(3px);
+}
+.site-item::before{
+  content:'';position:absolute;left:0;top:0;bottom:0;width:2px;
+  background:linear-gradient(180deg,var(--accent),var(--accent2));
+  transform:scaleY(0);transition:transform .22s;border-radius:0 2px 2px 0;
+}
+.site-item:hover::before{transform:scaleY(1)}
+
+/* cover thumbnail */
+.site-thumb{
+  width:52px;height:36px;
+  border-radius:8px;
+  overflow:hidden;
+  border:1px solid var(--border);
+  background:var(--bg3);
+  flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;
+}
+.site-thumb img{
+  width:100%;height:100%;object-fit:cover;display:block;
+}
+.site-thumb-ph{
+  font-size:1.1rem;line-height:1;
+}
+
+/* text */
+.site-item-info{flex:1;min-width:0}
+.site-item-name{
+  font-family:'DM Sans',sans-serif;
+  font-size:.88rem;font-weight:500;
+  color:var(--white);
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+  line-height:1.2;
+  margin-bottom:2px;
+}
+.site-item-url{
+  font-size:.68rem;color:var(--muted);
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+  letter-spacing:.02em;
+}
+
+/* arrow icon */
+.site-item-arrow{
+  width:14px;height:14px;
+  fill:none;stroke:var(--muted);
+  stroke-width:2;stroke-linecap:round;stroke-linejoin:round;
+  flex-shrink:0;opacity:.5;
+  transition:opacity .2s,stroke .2s;
+}
+.site-item:hover .site-item-arrow{opacity:1;stroke:var(--accent2)}
+
+/* divider */
+.sites-divider{
+  height:1px;background:var(--border);
+  margin:6px 10px;
+}
+
+/* RIGHT: LOGO */
 .nav-right{
   display:flex;align-items:center;justify-content:flex-end;
   width:44px;
   flex-shrink:0;
 }
-
-
 .nav-logo{
   width:38px;height:38px;border-radius:10px;
   border:1px solid var(--border2);
@@ -117,14 +261,6 @@ body::after{
 }
 .nav-logo img{width:100%;height:100%;object-fit:cover;display:block}
 .nav-logo .nav-logo-ph{font-size:1.2rem;line-height:1}
-.nav-title{
-  font-family:'Bebas Neue',sans-serif;
-  font-size:1.4rem;letter-spacing:.12em;
-  color:var(--white);
-}
-.nav-title span{color:var(--accent2)}
-
-
 
 /* ═══════════ SLIDE DRAWER ═══════════ */
 .drawer-overlay{
@@ -149,8 +285,6 @@ body::after{
   overflow:hidden;
 }
 .drawer.open{transform:translateX(0)}
-
-/* drawer top accent line */
 .drawer::after{
   content:'';
   position:absolute;top:0;left:0;right:0;height:2px;
@@ -275,7 +409,6 @@ body::after{
 
 .panel-body{padding:28px 36px 40px;flex:1}
 
-/* about rows */
 .about-rows{display:flex;flex-direction:column}
 .about-row{
   display:grid;grid-template-columns:90px 1fr;
@@ -298,7 +431,6 @@ body::after{
 }
 .about-val a:hover{color:var(--accent3);border-color:var(--accent3)}
 
-/* social */
 .social-wrap{display:flex;flex-direction:column;gap:22px}
 .social-pill{
   display:inline-flex;align-items:center;gap:14px;
@@ -334,8 +466,6 @@ body::after{
   text-align:center;
   overflow:hidden;
 }
-
-/* grid lines */
 .hero::before{
   content:'';position:absolute;inset:0;
   background-image:
@@ -395,7 +525,6 @@ body::after{
   letter-spacing:.03em;
 }
 
-/* stat bar */
 .hero-stats{
   display:inline-flex;align-items:center;gap:0;
   background:rgba(255,255,255,0.03);
@@ -452,14 +581,12 @@ body::after{
   color:var(--white);
 }
 
-/* GAME GRID */
 .game-grid{
   display:grid;
   grid-template-columns:repeat(auto-fit,minmax(340px,1fr));
   gap:20px;
 }
 
-/* CARD */
 .gcard{
   background:var(--bg2);
   border:1px solid var(--border);
@@ -483,8 +610,6 @@ body::after{
     0 0 0 1px rgba(61,127,255,.12),
     0 0 48px rgba(61,127,255,.07);
 }
-
-/* top shimmer on hover */
 .gcard::before{
   content:'';position:absolute;top:0;left:0;right:0;height:1px;
   background:linear-gradient(90deg,transparent 0%,var(--accent) 40%,var(--accent2) 60%,transparent 100%);
@@ -492,7 +617,6 @@ body::after{
 }
 .gcard:hover::before{opacity:1}
 
-/* image */
 .gcard-img{
   position:relative;overflow:hidden;aspect-ratio:16/9;
 }
@@ -502,15 +626,12 @@ body::after{
   filter:brightness(.7) saturate(.8);
 }
 .gcard:hover .gcard-img img{transform:scale(1.08);filter:brightness(.95) saturate(1.15)}
-
-/* gradient fade into card body */
 .gcard-img::after{
   content:'';position:absolute;inset:0;
   background:linear-gradient(0deg,var(--bg2) 0%,rgba(11,15,26,.4) 45%,transparent 100%);
   pointer-events:none;z-index:1;
 }
 
-/* badge */
 .gcard-badge{
   position:absolute;top:14px;left:14px;z-index:2;
   padding:4px 12px;
@@ -522,7 +643,6 @@ body::after{
   color:var(--accent2);
 }
 
-/* card index */
 .gcard-index{
   position:absolute;top:14px;right:14px;z-index:2;
   font-family:'Bebas Neue',sans-serif;
@@ -531,7 +651,6 @@ body::after{
   line-height:1;
 }
 
-/* body */
 .gcard-body{
   padding:22px 26px 28px;
   display:flex;flex-direction:column;flex:1;
@@ -553,7 +672,6 @@ body::after{
   color:var(--muted2);flex:1;margin-bottom:24px;
 }
 
-/* play button */
 .play-btn{
   display:inline-flex;align-items:center;gap:10px;
   align-self:flex-start;
@@ -608,7 +726,6 @@ footer{
   text-transform:uppercase;color:var(--muted);opacity:.45;
 }
 
-/* ═══════════ SCROLLBAR ═══════════ */
 ::-webkit-scrollbar{width:3px}
 ::-webkit-scrollbar-track{background:var(--bg)}
 ::-webkit-scrollbar-thumb{background:rgba(61,127,255,.25);border-radius:2px}
@@ -616,21 +733,24 @@ footer{
 
 /* ═══════════ RESPONSIVE ═══════════ */
 @media(max-width:768px){
-  .topnav{padding:0 16px}
-  .nav-center{gap:10px}
-  .nav-title{font-size:1.2rem}
+  .topnav{padding:0 14px}
+  .sites-btn-label{display:none}
+  .sites-btn{padding:9px 12px;gap:6px}
   .hero{padding:130px 20px 70px}
   .games{padding:40px 16px 80px}
   .game-grid{grid-template-columns:1fr;gap:16px}
   .side-panel{width:100%;max-width:100vw}
   footer{justify-content:center;text-align:center}
   .hero-stats{flex-wrap:wrap;border-radius:16px}
+  .sites-dropdown{min-width:260px}
 }
 @media(max-width:480px){
   .gcard-body{padding:18px 18px 22px}
   .panel-head{padding:72px 22px 22px}
   .panel-body{padding:20px 22px 32px}
   .drawer{width:280px}
+  .sites-dropdown{left:50%;transform:translateX(-50%) translateY(-6px);min-width:240px}
+  .sites-dropdown.open{transform:translateX(-50%) translateY(0)}
 }
 </style>
 </head>
@@ -647,11 +767,105 @@ footer{
     <span></span><span></span><span></span>
   </button>
 
+  <!-- CENTER: My Sites Dropdown -->
+  <div class="nav-center">
+    <button class="sites-btn" id="sitesBtn" aria-label="My Sites" aria-expanded="false" aria-haspopup="true">
+      <span class="sites-btn-dot"></span>
+      <span class="sites-btn-label">My Sites</span>
+      <svg class="sites-caret" viewBox="0 0 16 16" aria-hidden="true">
+        <polyline points="4,6 8,10 12,6"/>
+      </svg>
+    </button>
+
+    <div class="sites-dropdown" id="sitesDropdown" role="menu">
+      <span class="sites-dd-label">My Websites</span>
+
+      <!-- ─────────────────────────────────────────────────
+           ADD YOUR SITES BELOW.
+           Copy a <a class="site-item"> block for each site.
+
+           site-thumb: replace "images/site1-cover.png"
+                       with your actual cover image path.
+                       The fallback emoji shows if image is missing.
+
+           site-item-name: your site's display name
+           site-item-url:  short URL shown below the name
+           href:           full URL (opens in new tab)
+      ──────────────────────────────────────────────────── -->
+
+      <a href="https://curvecraftmath.vercel.app" target="_blank" rel="noopener" class="site-item" role="menuitem">
+        <div class="site-thumb">
+          <img src="images/CurveCraft (1).png" alt="Site 1 cover"
+               onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
+          <span class="site-thumb-ph" style="display:none">🌐</span>
+        </div>
+        <div class="site-item-info">
+          <div class="site-item-name">CurveCraft Math</div>
+          <div class="site-item-url">curvecraftmath.vercel.app</div>
+        </div>
+        <svg class="site-item-arrow" viewBox="0 0 16 16" aria-hidden="true">
+          <path d="M3 8h10M9 4l4 4-4 4"/>
+        </svg>
+      </a>
+
+      <div class="sites-divider"></div>
+
+      <a href="https://flamesgame1.vercel.app" target="_blank" rel="noopener" class="site-item" role="menuitem">
+        <div class="site-thumb">
+          <img src="images/Flames.png" alt="Site 2 cover"
+               onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
+          <span class="site-thumb-ph" style="display:none">🎨</span>
+        </div>
+        <div class="site-item-info">
+          <div class="site-item-name">Flames</div>
+          <div class="site-item-url">flamesgame1.vercel.app</div>
+        </div>
+        <svg class="site-item-arrow" viewBox="0 0 16 16" aria-hidden="true">
+          <path d="M3 8h10M9 4l4 4-4 4"/>
+        </svg>
+      </a>
+      <a href="https://guess-sketch.onrender.com" target="_blank" rel="noopener" class="site-item" role="menuitem">
+        <div class="site-thumb">
+          <img src="images/guess-sketch.png" alt="Site 2 cover"
+               onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
+          <span class="site-thumb-ph" style="display:none">🎨</span>
+        </div>
+        <div class="site-item-info">
+          <div class="site-item-name">Guess Sketch</div>
+          <div class="site-item-url">guess-sketch.onrender.com</div>
+        </div>
+        <svg class="site-item-arrow" viewBox="0 0 16 16" aria-hidden="true">
+          <path d="M3 8h10M9 4l4 4-4 4"/>
+        </svg>
+      </a>
+
+      <div class="sites-divider"></div>
+
+      <a href="https://valentinegameapp.vercel.app" target="_blank" rel="noopener" class="site-item" role="menuitem">
+        <div class="site-thumb">
+          <img src="images/Val.png" alt="Site 3 cover"
+               onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
+          <span class="site-thumb-ph" style="display:none">🚀</span>
+        </div>
+        <div class="site-item-info">
+          <div class="site-item-name">Valentine</div>
+          <div class="site-item-url">valentinegameapp.vercel.app</div>
+        </div>
+        <svg class="site-item-arrow" viewBox="0 0 16 16" aria-hidden="true">
+          <path d="M3 8h10M9 4l4 4-4 4"/>
+        </svg>
+      </a>
+
+      <!-- Add more sites by copying the block above and changing the details -->
+
+    </div>
+  </div>
+
   <!-- RIGHT: Logo -->
   <div class="nav-right">
     <div class="nav-logo" id="navLogo">
-      <!-- Replace images/Logo.png with your actual image file in VS Code -->
-      <img src="images/Logo.png" alt="Logo" id="navLogoImg" onerror="this.style.display='none';document.getElementById('navLogoPh').style.display='block'">
+      <img src="images/Logo.png" alt="Logo" id="navLogoImg"
+           onerror="this.style.display='none';document.getElementById('navLogoPh').style.display='block'">
       <span class="nav-logo-ph" id="navLogoPh" style="display:none">🎮</span>
     </div>
   </div>
@@ -754,7 +968,7 @@ footer{
         </div>
       </div>
       <p class="social-quote">Connect with me professionally — let's discuss game development, collaborations, and opportunities.</p>
-      <a href="https://www.linkedin.com/in/praneet-kumar-2b5471412/" target="_blank" rel="noopener" class="social-cta">
+      <a href="https://www.linkedin.com/in/praneeth-kumar-4b5926406//" target="_blank" rel="noopener" class="social-cta">
         Visit LinkedIn
         <svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
       </a>
@@ -776,7 +990,7 @@ footer{
     <p class="hero-sub">Play my games online — directly in your browser</p>
     <div class="hero-stats">
       <div class="hero-stat">
-        <span class="hero-stat-n">3</span>
+        <span class="hero-stat-n">4</span>
         <span class="hero-stat-l">Games</span>
       </div>
       <div class="hero-stat">
@@ -859,8 +1073,8 @@ footer{
         </a>
       </div>
     </div>
-    
-     <div class="gcard">
+
+    <div class="gcard">
       <div class="gcard-img">
         <img src="images/ApexRunner.png" alt="Apex Runner">
         <div class="gcard-badge">Mobile</div>
@@ -869,7 +1083,7 @@ footer{
       <div class="gcard-body">
         <div class="gcard-title">Apex Runner</div>
         <div class="gcard-rule"></div>
-        <p class="gcard-desc">Experience the thrill of apex Ssprint on your mobile device.</p>
+        <p class="gcard-desc">Experience the thrill of apex sprint on your mobile device.</p>
         <a href="ApexSprint/index.html" class="play-btn">
           <span class="play-btn-bg"></span>
           <span class="play-btn-text">Play Now</span>
@@ -879,7 +1093,6 @@ footer{
         </a>
       </div>
     </div>
-
 
   </div>
 </section>
@@ -891,8 +1104,8 @@ footer{
 
 <script>
 // ── DRAWER ──
-const hamBtn      = document.getElementById('hamBtn');
-const drawer      = document.getElementById('drawer');
+const hamBtn        = document.getElementById('hamBtn');
+const drawer        = document.getElementById('drawer');
 const drawerOverlay = document.getElementById('drawerOverlay');
 
 function openDrawer(){
@@ -906,8 +1119,42 @@ function closeDrawer(){
   hamBtn.classList.remove('open');
 }
 
-hamBtn.addEventListener('click', () => drawer.classList.contains('open') ? closeDrawer() : openDrawer());
+hamBtn.addEventListener('click', () =>
+  drawer.classList.contains('open') ? closeDrawer() : openDrawer()
+);
 drawerOverlay.addEventListener('click', closeDrawer);
+
+// ── MY SITES DROPDOWN ──
+const sitesBtn      = document.getElementById('sitesBtn');
+const sitesDropdown = document.getElementById('sitesDropdown');
+
+function openSites(){
+  sitesBtn.classList.add('open');
+  sitesDropdown.classList.add('open');
+  sitesBtn.setAttribute('aria-expanded','true');
+}
+function closeSites(){
+  sitesBtn.classList.remove('open');
+  sitesDropdown.classList.remove('open');
+  sitesBtn.setAttribute('aria-expanded','false');
+}
+
+sitesBtn.addEventListener('click', (e) => {
+  e.stopPropagation();
+  sitesDropdown.classList.contains('open') ? closeSites() : openSites();
+});
+
+// Close when clicking outside
+document.addEventListener('click', (e) => {
+  if(!sitesBtn.contains(e.target) && !sitesDropdown.contains(e.target)){
+    closeSites();
+  }
+});
+
+// Close on Escape
+document.addEventListener('keydown', (e) => {
+  if(e.key === 'Escape') closeSites();
+});
 
 // ── SIDE PANELS ──
 const panelOverlay = document.getElementById('panelOverlay');
@@ -920,12 +1167,12 @@ function closeAllPanels(){
 
 document.querySelectorAll('[data-panel]').forEach(btn => {
   btn.addEventListener('click', () => {
-    const id  = btn.dataset.panel;
+    const id    = btn.dataset.panel;
     const panel = document.getElementById('panel-' + id);
-    const was = panel.classList.contains('open');
+    const was   = panel.classList.contains('open');
     closeAllPanels();
     closeDrawer();
-    if (!was) {
+    if(!was){
       panel.classList.add('open');
       panelOverlay.classList.add('active');
       document.querySelectorAll(`[data-panel="${id}"]`).forEach(b => b.classList.add('active'));
@@ -933,7 +1180,9 @@ document.querySelectorAll('[data-panel]').forEach(btn => {
   });
 });
 
-document.querySelectorAll('[data-close]').forEach(btn => btn.addEventListener('click', closeAllPanels));
+document.querySelectorAll('[data-close]').forEach(btn =>
+  btn.addEventListener('click', closeAllPanels)
+);
 panelOverlay.addEventListener('click', closeAllPanels);
 </script>
 </body>
