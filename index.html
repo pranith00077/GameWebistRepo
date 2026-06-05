@@ -3,1186 +3,833 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Praneeth Kumar — Unity Games</title>
+<title>Praneeth Kumar — Unity Game Developer</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=JetBrains+Mono:wght@300;400&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
 
 :root{
-  --bg:        #06080f;
-  --bg2:       #0b0f1a;
-  --bg3:       #111827;
-  --bg4:       #1c2538;
-  --surface:   rgba(255,255,255,0.03);
-  --accent:    #3d7fff;
-  --accent2:   #6fa3ff;
-  --accent3:   #a8c8ff;
-  --gold:      #d4a84b;
-  --gold2:     #f0c96a;
-  --cream:     #dce4f5;
-  --white:     #ffffff;
-  --muted:     #5a6a88;
-  --muted2:    #7a8dab;
-  --border:    rgba(61,127,255,0.10);
-  --border2:   rgba(61,127,255,0.20);
-  --border3:   rgba(61,127,255,0.35);
-  --red:       #e04444;
-  --nav-h:     72px;
-  --glow:      rgba(61,127,255,0.12);
+  --bg:#080a10;
+  --bg2:#0d1018;
+  --bg3:#131720;
+  --bg4:#1a2030;
+  --surface:rgba(255,255,255,0.03);
+  --surface2:rgba(255,255,255,0.06);
+  --accent:#00d4aa;
+  --accent2:#00f5c4;
+  --accent3:rgba(0,212,170,0.15);
+  --gold:#f5c842;
+  --white:#ffffff;
+  --cream:#e8edf5;
+  --muted:#6b7a99;
+  --muted2:#8899bb;
+  --border:rgba(0,212,170,0.08);
+  --border2:rgba(0,212,170,0.18);
+  --border3:rgba(0,212,170,0.35);
+  --nav-h:70px;
+  --red:#e04444;
 }
 
 html{scroll-behavior:smooth}
+body{font-family:'Space Grotesk',sans-serif;background:var(--bg);color:var(--cream);min-height:100vh;overflow-x:hidden;cursor:none}
 
-body{
-  font-family:'DM Sans',sans-serif;
-  background:var(--bg);
-  color:var(--cream);
-  min-height:100vh;
-  overflow-x:hidden;
-}
+/* custom cursor */
+#cursor{position:fixed;width:12px;height:12px;background:var(--accent);border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:width .2s,height .2s,opacity .2s;mix-blend-mode:difference}
+#cursor-ring{position:fixed;width:40px;height:40px;border:1px solid rgba(0,212,170,0.4);border-radius:50%;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:all .12s ease-out}
+body:hover #cursor{opacity:1}
 
-body::before{
-  content:'';
-  position:fixed;inset:0;
-  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
-  pointer-events:none;z-index:1;opacity:.5;
-}
+/* noise overlay */
+body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");pointer-events:none;z-index:1;opacity:.6}
 
-body::after{
-  content:'';
-  position:fixed;inset:0;
-  background:
-    radial-gradient(ellipse 55% 45% at 15% 15%, rgba(61,127,255,0.07) 0%, transparent 65%),
-    radial-gradient(ellipse 40% 35% at 85% 80%, rgba(111,163,255,0.05) 0%, transparent 55%),
-    radial-gradient(ellipse 70% 25% at 50% 100%, rgba(61,127,255,0.04) 0%, transparent 70%);
-  pointer-events:none;z-index:0;
-}
+/* ambient glows */
+body::after{content:'';position:fixed;inset:0;background:radial-gradient(ellipse 50% 40% at 80% 10%,rgba(0,212,170,0.05) 0%,transparent 65%),radial-gradient(ellipse 60% 30% at 10% 90%,rgba(0,212,170,0.04) 0%,transparent 60%);pointer-events:none;z-index:0}
 
-/* ═══════════ TOP NAV ═══════════ */
-.topnav{
-  position:fixed;top:0;left:0;right:0;
-  height:var(--nav-h);
-  background:rgba(6,8,15,0.80);
-  backdrop-filter:blur(24px) saturate(1.4);
-  -webkit-backdrop-filter:blur(24px) saturate(1.4);
-  border-bottom:1px solid var(--border);
-  z-index:900;
-  display:flex;align-items:center;justify-content:space-between;
-  padding:0 28px;
-}
+/* ═══════ CANVAS PARTICLES ═══════ */
+#particles-canvas{position:fixed;inset:0;z-index:2;pointer-events:none;opacity:.5}
 
-/* LEFT: HAMBURGER */
-.ham-btn{
-  width:44px;height:44px;
-  background:var(--surface);
-  border:1px solid var(--border2);
-  border-radius:12px;
-  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;
-  cursor:pointer;
-  transition:background .25s,border-color .25s,transform .2s;
-  flex-shrink:0;
-}
-.ham-btn:hover{
-  background:rgba(61,127,255,0.08);
-  border-color:var(--border3);
-  transform:scale(1.04);
-}
-.ham-btn span{
-  display:block;width:18px;height:1.5px;
-  background:var(--accent2);border-radius:2px;
-  transition:all .32s cubic-bezier(.4,0,.2,1);
-  transform-origin:center;
-}
+/* ═══════ TOP NAV ═══════ */
+.nav{position:fixed;top:0;left:0;right:0;height:var(--nav-h);background:rgba(8,10,16,0.85);backdrop-filter:blur(28px) saturate(1.6);border-bottom:1px solid var(--border);z-index:100;display:flex;align-items:center;justify-content:space-between;padding:0 32px}
+
+.nav-logo-wrap{display:flex;align-items:center;gap:12px}
+.nav-logo{width:36px;height:36px;border-radius:8px;border:1px solid var(--border2);overflow:hidden;background:var(--bg3);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.nav-logo img{width:100%;height:100%;object-fit:cover}
+.nav-logo-ph{font-size:1.1rem}
+.nav-brand{font-family:'Space Grotesk',sans-serif;font-size:.85rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--white)}
+.nav-brand span{color:var(--accent)}
+
+.nav-links{display:flex;align-items:center;gap:6px}
+.nav-link{padding:8px 16px;border-radius:8px;background:none;border:none;color:var(--muted2);font-family:'Space Grotesk',sans-serif;font-size:.8rem;font-weight:500;letter-spacing:.06em;cursor:none;text-decoration:none;transition:color .2s,background .2s}
+.nav-link:hover{color:var(--white);background:var(--surface2)}
+.nav-link.active{color:var(--accent)}
+
+.nav-cta{padding:9px 20px;background:var(--accent);border-radius:8px;border:none;color:#000;font-family:'Space Grotesk',sans-serif;font-size:.78rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;cursor:none;text-decoration:none;transition:all .25s}
+.nav-cta:hover{background:var(--accent2);transform:translateY(-1px);box-shadow:0 8px 24px rgba(0,212,170,0.3)}
+
+/* HAMBURGER */
+.ham-btn{display:none;width:40px;height:40px;background:var(--surface);border:1px solid var(--border2);border-radius:8px;flex-direction:column;align-items:center;justify-content:center;gap:5px;cursor:none}
+.ham-btn span{display:block;width:16px;height:1.5px;background:var(--accent2);border-radius:2px;transition:all .32s cubic-bezier(.4,0,.2,1);transform-origin:center}
 .ham-btn.open span:nth-child(1){transform:translateY(6.5px) rotate(45deg)}
-.ham-btn.open span:nth-child(2){opacity:0;transform:scaleX(0)}
+.ham-btn.open span:nth-child(2){opacity:0}
 .ham-btn.open span:nth-child(3){transform:translateY(-6.5px) rotate(-45deg)}
 
-/* CENTER: MY SITES DROPDOWN */
-.nav-center{
-  position:relative;
-  display:flex;align-items:center;
-}
+/* MOBILE MENU */
+.mobile-menu{position:fixed;inset:0;top:var(--nav-h);background:rgba(8,10,16,0.97);backdrop-filter:blur(20px);z-index:99;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;transform:translateY(-100%);opacity:0;transition:transform .4s cubic-bezier(.4,0,.2,1),opacity .4s}
+.mobile-menu.open{transform:translateY(0);opacity:1}
+.mobile-menu .nav-link{font-size:1.4rem;font-weight:600;padding:16px 40px;letter-spacing:.1em}
 
-.sites-btn{
-  display:flex;align-items:center;gap:8px;
-  padding:9px 18px;
-  background:rgba(61,127,255,0.06);
-  border:1px solid var(--border2);
-  border-radius:100px;
-  color:var(--accent2);
-  font-family:'DM Sans',sans-serif;
-  font-size:.78rem;font-weight:500;
-  letter-spacing:.1em;text-transform:uppercase;
-  cursor:pointer;
-  transition:background .25s,border-color .25s,color .25s,transform .2s;
-  white-space:nowrap;
-}
-.sites-btn:hover{
-  background:rgba(61,127,255,0.12);
-  border-color:var(--border3);
-  color:var(--white);
-  transform:scale(1.03);
-}
-.sites-btn-dot{
-  width:6px;height:6px;border-radius:50%;
-  background:var(--accent2);
-  box-shadow:0 0 8px rgba(111,163,255,.8);
-  flex-shrink:0;
-}
-.sites-caret{
-  width:14px;height:14px;
-  fill:none;stroke:currentColor;
-  stroke-width:2;stroke-linecap:round;stroke-linejoin:round;
-  transition:transform .28s cubic-bezier(.4,0,.2,1);
-  flex-shrink:0;
-}
-.sites-btn.open .sites-caret{transform:rotate(180deg)}
+/* ═══════ HERO ═══════ */
+.hero{position:relative;z-index:5;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:0 32px;text-align:center;overflow:hidden}
 
-/* DROPDOWN MENU */
-.sites-dropdown{
-  position:absolute;
-  top:calc(100% + 12px);
-  left:50%;transform:translateX(-50%) translateY(-6px);
-  min-width:280px;
-  background:var(--bg2);
-  border:1px solid var(--border2);
-  border-radius:20px;
-  padding:10px;
-  z-index:950;
-  opacity:0;pointer-events:none;
-  transition:opacity .25s,transform .28s cubic-bezier(.34,1.4,.64,1);
-  box-shadow:0 20px 60px rgba(0,0,0,.55),0 0 0 1px rgba(61,127,255,.08);
-  overflow:hidden;
-}
-/* top accent line */
-.sites-dropdown::before{
-  content:'';
-  position:absolute;top:0;left:0;right:0;height:2px;
-  background:linear-gradient(90deg,transparent,var(--accent),var(--accent2),transparent);
-}
-.sites-dropdown.open{
-  opacity:1;pointer-events:all;
-  transform:translateX(-50%) translateY(0);
-}
+/* grid lines bg */
+.hero::before{content:'';position:absolute;inset:0;background-image:linear-gradient(rgba(0,212,170,0.04) 1px,transparent 1px),linear-gradient(90deg,rgba(0,212,170,0.04) 1px,transparent 1px);background-size:80px 80px;mask-image:radial-gradient(ellipse 80% 80% at 50% 50%,black 20%,transparent 80%);-webkit-mask-image:radial-gradient(ellipse 80% 80% at 50% 50%,black 20%,transparent 80%);pointer-events:none}
 
-/* dropdown header label */
-.sites-dd-label{
-  font-size:.6rem;font-weight:500;letter-spacing:.3em;text-transform:uppercase;
-  color:var(--accent2);opacity:.6;
-  padding:4px 12px 10px;
-  display:block;
-}
+.hero-eyebrow{display:inline-flex;align-items:center;gap:10px;background:rgba(0,212,170,0.07);border:1px solid rgba(0,212,170,0.2);border-radius:100px;padding:7px 20px;margin-bottom:36px;animation:fadeUp .8s both .2s}
+.hero-eyebrow-dot{width:6px;height:6px;border-radius:50%;background:var(--accent2);box-shadow:0 0 12px rgba(0,245,196,.9);animation:pulse 2.2s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(.7)}}
+.hero-eyebrow span{font-size:.7rem;font-weight:600;letter-spacing:.28em;text-transform:uppercase;color:var(--accent2)}
 
-/* each site row */
-.site-item{
-  display:flex;align-items:center;gap:12px;
-  padding:10px 12px;
-  border-radius:12px;
-  border:1px solid transparent;
-  text-decoration:none;
-  color:var(--cream);
-  transition:background .2s,border-color .2s,transform .2s;
-  position:relative;overflow:hidden;
-}
-.site-item:hover{
-  background:rgba(61,127,255,0.07);
-  border-color:var(--border);
-  transform:translateX(3px);
-}
-.site-item::before{
-  content:'';position:absolute;left:0;top:0;bottom:0;width:2px;
-  background:linear-gradient(180deg,var(--accent),var(--accent2));
-  transform:scaleY(0);transition:transform .22s;border-radius:0 2px 2px 0;
-}
-.site-item:hover::before{transform:scaleY(1)}
+/* NAME ANIMATION */
+.hero-name{margin-bottom:12px;overflow:hidden;animation:fadeUp .9s both .4s}
+.hero-name-line{display:block;font-family:'Playfair Display',serif;font-weight:900;font-size:clamp(3.5rem,10vw,8.5rem);line-height:.9;color:var(--white);letter-spacing:-.01em}
+.hero-name-line.accent-line{color:transparent;-webkit-text-stroke:2px var(--accent);filter:drop-shadow(0 0 30px rgba(0,212,170,0.4))}
 
-/* cover thumbnail */
-.site-thumb{
-  width:52px;height:36px;
-  border-radius:8px;
-  overflow:hidden;
-  border:1px solid var(--border);
-  background:var(--bg3);
-  flex-shrink:0;
-  display:flex;align-items:center;justify-content:center;
-}
-.site-thumb img{
-  width:100%;height:100%;object-fit:cover;display:block;
-}
-.site-thumb-ph{
-  font-size:1.1rem;line-height:1;
-}
+/* TYPED */
+.hero-typed-wrap{height:40px;display:flex;align-items:center;justify-content:center;margin-bottom:32px;animation:fadeUp .9s both .6s}
+.hero-typed-prefix{font-size:1rem;color:var(--muted);font-weight:300;margin-right:8px}
+.hero-typed{font-family:'JetBrains Mono',monospace;font-size:1rem;color:var(--accent2);font-weight:400}
+.cursor-blink{animation:blink .8s infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
 
-/* text */
-.site-item-info{flex:1;min-width:0}
-.site-item-name{
-  font-family:'DM Sans',sans-serif;
-  font-size:.88rem;font-weight:500;
-  color:var(--white);
-  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
-  line-height:1.2;
-  margin-bottom:2px;
-}
-.site-item-url{
-  font-size:.68rem;color:var(--muted);
-  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
-  letter-spacing:.02em;
-}
+.hero-desc{max-width:560px;font-size:1rem;line-height:1.8;color:var(--muted2);font-weight:300;margin-bottom:48px;animation:fadeUp .9s both .7s}
 
-/* arrow icon */
-.site-item-arrow{
-  width:14px;height:14px;
-  fill:none;stroke:var(--muted);
-  stroke-width:2;stroke-linecap:round;stroke-linejoin:round;
-  flex-shrink:0;opacity:.5;
-  transition:opacity .2s,stroke .2s;
-}
-.site-item:hover .site-item-arrow{opacity:1;stroke:var(--accent2)}
+.hero-btns{display:flex;align-items:center;gap:16px;flex-wrap:wrap;justify-content:center;margin-bottom:72px;animation:fadeUp .9s both .8s}
+.btn-primary{display:inline-flex;align-items:center;gap:10px;padding:14px 32px;background:var(--accent);color:#000;font-family:'Space Grotesk',sans-serif;font-size:.82rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;text-decoration:none;border-radius:10px;transition:all .28s;border:none;cursor:none}
+.btn-primary:hover{background:var(--accent2);transform:translateY(-3px);box-shadow:0 12px 36px rgba(0,212,170,.35)}
+.btn-primary svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round;transition:transform .2s}
+.btn-primary:hover svg{transform:translateX(3px)}
+.btn-outline{display:inline-flex;align-items:center;gap:10px;padding:13px 28px;background:transparent;border:1px solid var(--border2);color:var(--cream);font-family:'Space Grotesk',sans-serif;font-size:.82rem;font-weight:500;letter-spacing:.08em;text-transform:uppercase;text-decoration:none;border-radius:10px;transition:all .28s;cursor:none}
+.btn-outline:hover{border-color:var(--accent);color:var(--accent);background:var(--accent3)}
 
-/* divider */
-.sites-divider{
-  height:1px;background:var(--border);
-  margin:6px 10px;
-}
+/* HERO STATS */
+.hero-stats{display:flex;align-items:stretch;background:rgba(255,255,255,0.02);border:1px solid var(--border);border-radius:16px;overflow:hidden;animation:fadeUp .9s both 1s}
+.h-stat{padding:16px 32px;display:flex;flex-direction:column;align-items:center;gap:3px;border-right:1px solid var(--border)}
+.h-stat:last-child{border-right:none}
+.h-stat-n{font-family:'Playfair Display',serif;font-size:1.8rem;font-weight:700;color:var(--accent2);line-height:1}
+.h-stat-l{font-size:.62rem;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--muted)}
 
-/* RIGHT: LOGO */
-.nav-right{
-  display:flex;align-items:center;justify-content:flex-end;
-  width:44px;
-  flex-shrink:0;
-}
-.nav-logo{
-  width:38px;height:38px;border-radius:10px;
-  border:1px solid var(--border2);
-  overflow:hidden;background:var(--bg3);
-  display:flex;align-items:center;justify-content:center;
-  flex-shrink:0;
-}
-.nav-logo img{width:100%;height:100%;object-fit:cover;display:block}
-.nav-logo .nav-logo-ph{font-size:1.2rem;line-height:1}
+/* SCROLL INDICATOR */
+.scroll-hint{position:absolute;bottom:36px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:8px;animation:fadeUp 1s both 1.4s;cursor:none}
+.scroll-hint span{font-size:.6rem;letter-spacing:.3em;text-transform:uppercase;color:var(--muted)}
+.scroll-line{width:1px;height:48px;background:linear-gradient(180deg,var(--accent) 0%,transparent 100%);animation:scrollDrop 2s ease-in-out infinite}
+@keyframes scrollDrop{0%{transform:scaleY(0);transform-origin:top}50%{transform:scaleY(1);transform-origin:top}51%{transform:scaleY(1);transform-origin:bottom}100%{transform:scaleY(0);transform-origin:bottom}}
 
-/* ═══════════ SLIDE DRAWER ═══════════ */
-.drawer-overlay{
-  position:fixed;inset:0;
-  background:rgba(6,8,15,0.6);
-  backdrop-filter:blur(6px);
-  z-index:800;
-  opacity:0;pointer-events:none;
-  transition:opacity .35s;
-}
-.drawer-overlay.active{opacity:1;pointer-events:all}
+/* ═══════ SECTION SHARED ═══════ */
+section{position:relative;z-index:5}
+.section-wrap{max-width:1200px;margin:0 auto;padding:0 32px}
+.section-label{display:inline-flex;align-items:center;gap:8px;font-size:.62rem;font-weight:700;letter-spacing:.35em;text-transform:uppercase;color:var(--accent);margin-bottom:10px;opacity:.8}
+.section-label::before{content:'';width:24px;height:1px;background:var(--accent)}
+.section-title{font-family:'Playfair Display',serif;font-size:clamp(2rem,4.5vw,3.2rem);font-weight:900;color:var(--white);line-height:1.1;margin-bottom:6px}
+.section-title em{font-style:italic;color:var(--accent)}
 
-.drawer{
-  position:fixed;top:0;left:0;bottom:0;
-  width:300px;
-  background:var(--bg2);
-  border-right:1px solid var(--border2);
-  z-index:820;
-  transform:translateX(-100%);
-  transition:transform .4s cubic-bezier(.4,0,.2,1);
-  display:flex;flex-direction:column;
-  overflow:hidden;
-}
-.drawer.open{transform:translateX(0)}
-.drawer::after{
-  content:'';
-  position:absolute;top:0;left:0;right:0;height:2px;
-  background:linear-gradient(90deg,var(--accent),var(--accent2),transparent);
-}
+/* ═══════ ABOUT ═══════ */
+#about{padding:120px 0}
+.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center;margin-top:64px}
+.about-visual{position:relative}
+.about-card{background:var(--bg2);border:1px solid var(--border);border-radius:24px;padding:36px;position:relative;overflow:hidden}
+.about-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--accent),var(--accent2),transparent)}
+.about-avatar{width:80px;height:80px;border-radius:20px;background:linear-gradient(135deg,rgba(0,212,170,.15),rgba(0,212,170,.05));border:2px solid var(--border2);display:flex;align-items:center;justify-content:center;font-size:2rem;margin-bottom:20px}
+.about-card-name{font-family:'Playfair Display',serif;font-size:1.6rem;font-weight:700;color:var(--white);margin-bottom:4px}
+.about-card-role{font-size:.75rem;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--accent2);margin-bottom:20px}
+.about-card-row{display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid var(--border)}
+.about-card-row:last-child{border-bottom:none}
+.about-row-icon{width:30px;height:30px;border-radius:8px;background:var(--accent3);display:flex;align-items:center;justify-content:center;font-size:.85rem;flex-shrink:0}
+.about-row-key{font-size:.62rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin-bottom:2px}
+.about-row-val{font-size:.88rem;color:var(--cream)}
+.about-row-val a{color:var(--accent2);text-decoration:none;transition:color .2s}
+.about-row-val a:hover{color:var(--accent)}
 
-.drawer-head{
-  padding:88px 32px 28px;
-  border-bottom:1px solid var(--border);
-}
-.drawer-eyebrow{
-  font-size:.62rem;font-weight:500;letter-spacing:.35em;text-transform:uppercase;
-  color:var(--accent2);margin-bottom:6px;opacity:.7;
-}
-.drawer-name{
-  font-family:'Cormorant Garamond',serif;
-  font-size:1.8rem;font-weight:600;
-  color:var(--white);line-height:1.1;
-}
-.drawer-name em{font-style:italic;color:var(--accent2)}
+/* floating decoration */
+.about-float{position:absolute;top:-20px;right:-20px;width:100px;height:100px;border:1px solid var(--border2);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:2rem;background:var(--bg2);animation:floatY 4s ease-in-out infinite}
+@keyframes floatY{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
 
-.drawer-nav{
-  padding:20px 20px;
-  display:flex;flex-direction:column;gap:4px;
-  flex:1;
-}
+.about-text-side{display:flex;flex-direction:column;gap:24px}
+.about-lead{font-size:1.25rem;font-weight:600;color:var(--white);line-height:1.6}
+.about-lead em{color:var(--accent2);font-style:normal}
+.about-body{font-size:.95rem;line-height:1.9;color:var(--muted2);font-weight:300}
 
-.drawer-link{
-  display:flex;align-items:center;gap:14px;
-  padding:14px 14px;
-  border-radius:12px;
-  border:1px solid transparent;
-  color:var(--muted2);
-  font-family:'DM Sans',sans-serif;
-  font-size:.9rem;font-weight:400;
-  cursor:pointer;background:none;
-  text-decoration:none;width:100%;text-align:left;
-  transition:color .2s,background .2s,border-color .2s,transform .2s;
-  position:relative;overflow:hidden;
-}
-.drawer-link::before{
-  content:'';position:absolute;left:0;top:0;bottom:0;width:2px;
-  background:linear-gradient(180deg,var(--accent),var(--accent2));
-  transform:scaleY(0);transition:transform .25s;border-radius:0 2px 2px 0;
-}
-.drawer-link:hover,.drawer-link.active{
-  color:var(--white);
-  background:rgba(61,127,255,0.07);
-  border-color:var(--border);
-  transform:translateX(4px);
-}
-.drawer-link:hover::before,.drawer-link.active::before{transform:scaleY(1)}
-.drawer-link-icon{
-  width:32px;height:32px;border-radius:8px;
-  background:rgba(61,127,255,0.10);border:1px solid var(--border);
-  display:flex;align-items:center;justify-content:center;
-  font-size:.95rem;flex-shrink:0;
-  transition:background .2s,border-color .2s;
-}
-.drawer-link:hover .drawer-link-icon{background:rgba(61,127,255,0.18);border-color:var(--border2)}
+/* SKILLS */
+.skills-grid{display:flex;flex-wrap:wrap;gap:10px;margin-top:8px}
+.skill-tag{padding:7px 16px;background:var(--bg3);border:1px solid var(--border);border-radius:100px;font-size:.72rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--muted2);transition:all .2s}
+.skill-tag:hover{border-color:var(--accent);color:var(--accent);background:var(--accent3)}
 
-.drawer-footer{
-  padding:20px 32px 28px;
-  border-top:1px solid var(--border);
-}
-.drawer-footer-text{
-  font-size:.7rem;letter-spacing:.15em;text-transform:uppercase;
-  color:var(--muted);opacity:.5;
-}
+/* EXPERIENCE TIMELINE */
+.exp-title{font-size:.75rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin-bottom:16px;margin-top:24px}
+.exp-item{display:flex;gap:16px;padding:14px 0;border-bottom:1px solid var(--border)}
+.exp-item:last-child{border-bottom:none}
+.exp-dot{width:8px;height:8px;border-radius:50%;background:var(--accent);box-shadow:0 0 10px rgba(0,212,170,.5);flex-shrink:0;margin-top:6px}
+.exp-name{font-size:.9rem;font-weight:600;color:var(--white);margin-bottom:3px}
+.exp-sub{font-size:.75rem;color:var(--muted);font-weight:400}
 
-/* ═══════════ SIDE PANELS ═══════════ */
-.panel-overlay{
-  position:fixed;inset:0;
-  background:rgba(6,8,15,0.65);
-  backdrop-filter:blur(8px);
-  z-index:840;
-  opacity:0;pointer-events:none;
-  transition:opacity .3s;
-}
-.panel-overlay.active{opacity:1;pointer-events:all}
+/* ═══════ GAMES ═══════ */
+#games{padding:100px 0}
+.games-head{text-align:center;margin-bottom:64px}
+.game-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:20px}
 
-.side-panel{
-  position:fixed;top:0;right:0;
-  height:100vh;width:420px;max-width:100vw;
-  background:var(--bg2);
-  border-left:1px solid var(--border2);
-  z-index:860;
-  transform:translateX(110%);
-  transition:transform .42s cubic-bezier(.4,0,.2,1);
-  overflow-y:auto;display:flex;flex-direction:column;
-}
-.side-panel.open{transform:translateX(0)}
-.side-panel::before{
-  content:'';position:absolute;top:0;left:0;right:0;height:2px;
-  background:linear-gradient(90deg,transparent,var(--accent),var(--accent2),transparent);
-}
-
-.panel-head{
-  padding:84px 36px 28px;
-  border-bottom:1px solid var(--border);
-}
-.panel-eyebrow{
-  font-size:.62rem;font-weight:500;letter-spacing:.35em;text-transform:uppercase;
-  color:var(--accent2);margin-bottom:8px;opacity:.7;
-}
-.panel-title{
-  font-family:'Cormorant Garamond',serif;
-  font-size:2.2rem;font-weight:600;
-  color:var(--white);line-height:1.05;
-}
-.panel-title em{font-style:italic;color:var(--accent2)}
-
-.panel-close{
-  position:absolute;top:22px;right:22px;
-  width:36px;height:36px;border-radius:50%;
-  background:var(--bg3);border:1px solid var(--border);
-  color:var(--muted2);font-size:.85rem;
-  cursor:pointer;display:flex;align-items:center;justify-content:center;
-  transition:all .2s;
-}
-.panel-close:hover{background:var(--red);border-color:var(--red);color:#fff;transform:rotate(90deg)}
-
-.panel-body{padding:28px 36px 40px;flex:1}
-
-.about-rows{display:flex;flex-direction:column}
-.about-row{
-  display:grid;grid-template-columns:90px 1fr;
-  gap:16px;align-items:start;
-  padding:18px 0;border-bottom:1px solid var(--border);
-}
-.about-row:last-child{border-bottom:none}
-.about-key{
-  font-size:.62rem;font-weight:500;letter-spacing:.25em;text-transform:uppercase;
-  color:var(--accent);padding-top:3px;opacity:.75;
-}
-.about-val{
-  font-family:'Cormorant Garamond',serif;
-  font-size:1.1rem;color:var(--cream);line-height:1.6;
-}
-.about-val a{
-  color:var(--accent2);text-decoration:none;
-  border-bottom:1px solid rgba(111,163,255,.25);
-  transition:all .2s;
-}
-.about-val a:hover{color:var(--accent3);border-color:var(--accent3)}
-
-.social-wrap{display:flex;flex-direction:column;gap:22px}
-.social-pill{
-  display:inline-flex;align-items:center;gap:14px;
-  background:var(--bg3);border:1px solid var(--border2);
-  border-radius:14px;padding:16px 20px;
-}
-.social-pill-icon{font-size:1.7rem;line-height:1}
-.s-t1{font-family:'DM Sans',sans-serif;font-size:.95rem;font-weight:500;color:var(--white)}
-.s-t2{font-size:.75rem;color:var(--muted);margin-top:2px}
-.social-quote{
-  font-family:'Cormorant Garamond',serif;font-style:italic;
-  font-size:1.05rem;color:var(--muted2);line-height:1.8;
-}
-.social-cta{
-  display:inline-flex;align-items:center;gap:10px;
-  padding:12px 28px;
-  background:var(--accent);
-  color:#fff;
-  font-family:'DM Sans',sans-serif;
-  font-size:.8rem;font-weight:500;letter-spacing:.08em;text-transform:uppercase;
-  text-decoration:none;border-radius:10px;
-  transition:all .25s;
-  box-shadow:0 4px 24px rgba(61,127,255,.28);
-  width:fit-content;
-}
-.social-cta:hover{background:#2d6ef0;transform:translateY(-2px);box-shadow:0 8px 32px rgba(61,127,255,.42)}
-.social-cta svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round}
-
-/* ═══════════ HERO ═══════════ */
-.hero{
-  position:relative;z-index:5;
-  padding:160px 32px 90px;
-  text-align:center;
-  overflow:hidden;
-}
-.hero::before{
-  content:'';position:absolute;inset:0;
-  background-image:
-    linear-gradient(rgba(61,127,255,0.05) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(61,127,255,0.05) 1px, transparent 1px);
-  background-size:60px 60px;
-  mask-image:radial-gradient(ellipse 75% 70% at 50% 50%, black 20%, transparent 75%);
-  -webkit-mask-image:radial-gradient(ellipse 75% 70% at 50% 50%, black 20%, transparent 75%);
-  pointer-events:none;
-}
-
-.hero-content{position:relative;z-index:2}
-
-.hero-badge{
-  display:inline-flex;align-items:center;gap:9px;
-  background:rgba(61,127,255,0.08);
-  border:1px solid rgba(61,127,255,0.2);
-  border-radius:100px;
-  padding:7px 18px 7px 10px;
-  margin-bottom:32px;
-}
-.hero-badge-dot{
-  width:7px;height:7px;border-radius:50%;
-  background:var(--accent2);
-  box-shadow:0 0 10px rgba(111,163,255,.9);
-  animation:pulse 2.2s ease-in-out infinite;
-}
-@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(.8)}}
-.hero-badge span{
-  font-size:.68rem;font-weight:500;letter-spacing:.22em;text-transform:uppercase;
-  color:var(--accent2);
-}
-
-.hero-h1{
-  font-family:'Bebas Neue',sans-serif;
-  font-size:clamp(4rem,11vw,9rem);
-  font-weight:400;
-  line-height:.88;
-  color:var(--white);
-  letter-spacing:.04em;
-  margin-bottom:6px;
-}
-.hero-h1 .line2{
-  display:block;
-  background:linear-gradient(135deg,var(--accent) 0%,var(--accent2) 50%,var(--accent3) 100%);
-  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
-  background-clip:text;
-  filter:drop-shadow(0 0 30px rgba(61,127,255,0.3));
-}
-
-.hero-sub{
-  font-family:'Cormorant Garamond',serif;
-  font-style:italic;
-  font-size:clamp(1rem,2.2vw,1.3rem);
-  color:var(--muted2);
-  margin-bottom:44px;
-  letter-spacing:.03em;
-}
-
-.hero-stats{
-  display:inline-flex;align-items:center;gap:0;
-  background:rgba(255,255,255,0.03);
-  border:1px solid var(--border2);
-  border-radius:100px;
-  overflow:hidden;
-  margin-bottom:0;
-}
-.hero-stat{
-  padding:10px 24px;
-  display:flex;flex-direction:column;align-items:center;
-  gap:2px;
-}
-.hero-stat + .hero-stat{border-left:1px solid var(--border)}
-.hero-stat-n{
-  font-family:'Bebas Neue',sans-serif;
-  font-size:1.4rem;letter-spacing:.08em;
-  color:var(--accent2);line-height:1;
-}
-.hero-stat-l{
-  font-size:.6rem;letter-spacing:.2em;text-transform:uppercase;
-  color:var(--muted);
-}
-
-/* ═══════════ GAMES SECTION ═══════════ */
-.games{
-  position:relative;z-index:5;
-  max-width:1240px;margin:0 auto;
-  padding:60px 32px 110px;
-}
-
-.section-head{
-  text-align:center;margin-bottom:56px;
-}
-.section-num{
-  font-family:'Bebas Neue',sans-serif;
-  font-size:5rem;letter-spacing:.05em;
-  color:rgba(61,127,255,0.06);
-  line-height:1;margin-bottom:-28px;
-  user-select:none;
-}
-.section-chip{
-  display:inline-block;
-  background:rgba(61,127,255,0.08);
-  border:1px solid rgba(61,127,255,0.18);
-  border-radius:100px;
-  padding:5px 16px;
-  font-size:.65rem;font-weight:500;letter-spacing:.28em;text-transform:uppercase;
-  color:var(--accent2);margin-bottom:10px;
-}
-.section-title{
-  font-family:'Bebas Neue',sans-serif;
-  font-size:clamp(1.8rem,4vw,2.8rem);letter-spacing:.1em;
-  color:var(--white);
-}
-
-.game-grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(340px,1fr));
-  gap:20px;
-}
-
-.gcard{
-  background:var(--bg2);
-  border:1px solid var(--border);
-  border-radius:24px;
-  overflow:hidden;
-  display:flex;flex-direction:column;
-  position:relative;
-  transition:transform .35s cubic-bezier(.34,1.5,.64,1),border-color .3s,box-shadow .3s;
-  animation:cardUp .6s cubic-bezier(.34,1.4,.64,1) both;
-}
+.gcard{background:var(--bg2);border:1px solid var(--border);border-radius:24px;overflow:hidden;display:flex;flex-direction:column;position:relative;transition:transform .4s cubic-bezier(.34,1.4,.64,1),border-color .3s,box-shadow .3s;animation:cardUp .7s cubic-bezier(.34,1.4,.64,1) both}
 .gcard:nth-child(1){animation-delay:.1s}
-.gcard:nth-child(2){animation-delay:.22s}
-.gcard:nth-child(3){animation-delay:.34s}
-@keyframes cardUp{from{opacity:0;transform:translateY(36px) scale(.97)}to{opacity:1;transform:translateY(0) scale(1)}}
-
-.gcard:hover{
-  transform:translateY(-10px) scale(1.005);
-  border-color:var(--border2);
-  box-shadow:
-    0 24px 64px rgba(0,0,0,.55),
-    0 0 0 1px rgba(61,127,255,.12),
-    0 0 48px rgba(61,127,255,.07);
-}
-.gcard::before{
-  content:'';position:absolute;top:0;left:0;right:0;height:1px;
-  background:linear-gradient(90deg,transparent 0%,var(--accent) 40%,var(--accent2) 60%,transparent 100%);
-  opacity:0;transition:opacity .3s;z-index:3;
-}
+.gcard:nth-child(2){animation-delay:.2s}
+.gcard:nth-child(3){animation-delay:.3s}
+.gcard:nth-child(4){animation-delay:.4s}
+@keyframes cardUp{from{opacity:0;transform:translateY(40px) scale(.96)}to{opacity:1;transform:translateY(0) scale(1)}}
+.gcard:hover{transform:translateY(-12px) scale(1.008);border-color:var(--border2);box-shadow:0 28px 72px rgba(0,0,0,.6),0 0 0 1px rgba(0,212,170,.1),0 0 60px rgba(0,212,170,.06)}
+.gcard::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--accent),var(--accent2),transparent);opacity:0;transition:opacity .3s;z-index:3}
 .gcard:hover::before{opacity:1}
 
-.gcard-img{
-  position:relative;overflow:hidden;aspect-ratio:16/9;
-}
-.gcard-img img{
-  width:100%;height:100%;object-fit:cover;display:block;
-  transition:transform .65s ease,filter .65s ease;
-  filter:brightness(.7) saturate(.8);
-}
-.gcard:hover .gcard-img img{transform:scale(1.08);filter:brightness(.95) saturate(1.15)}
-.gcard-img::after{
-  content:'';position:absolute;inset:0;
-  background:linear-gradient(0deg,var(--bg2) 0%,rgba(11,15,26,.4) 45%,transparent 100%);
-  pointer-events:none;z-index:1;
-}
+.gcard-img{position:relative;overflow:hidden;aspect-ratio:16/9}
+.gcard-img img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .7s ease,filter .7s ease;filter:brightness(.6) saturate(.7)}
+.gcard:hover .gcard-img img{transform:scale(1.1);filter:brightness(.9) saturate(1.2)}
+.gcard-img::after{content:'';position:absolute;inset:0;background:linear-gradient(0deg,var(--bg2) 0%,rgba(13,16,24,.5) 40%,transparent 100%);pointer-events:none;z-index:1}
+.gcard-badge{position:absolute;top:14px;left:14px;z-index:2;padding:4px 12px;background:rgba(0,0,0,.75);border:1px solid var(--border2);border-radius:100px;backdrop-filter:blur(10px);font-size:.58rem;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:var(--accent2)}
+.gcard-num{position:absolute;top:14px;right:14px;z-index:2;font-family:'Playfair Display',serif;font-size:1.4rem;font-weight:700;color:rgba(255,255,255,.12)}
 
-.gcard-badge{
-  position:absolute;top:14px;left:14px;z-index:2;
-  padding:4px 12px;
-  background:rgba(6,8,15,.82);
-  border:1px solid var(--border2);
-  border-radius:100px;
-  backdrop-filter:blur(10px);
-  font-size:.6rem;font-weight:500;letter-spacing:.2em;text-transform:uppercase;
-  color:var(--accent2);
-}
+.gcard-body{padding:24px 28px 30px;flex:1;display:flex;flex-direction:column}
+.gcard-title{font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:700;color:var(--white);margin-bottom:8px}
+.gcard-line{width:0;height:2px;background:linear-gradient(90deg,var(--accent),transparent);margin-bottom:12px;border-radius:1px;transition:width .4s ease}
+.gcard:hover .gcard-line{width:48px}
+.gcard-desc{font-size:.83rem;line-height:1.8;font-weight:300;color:var(--muted2);flex:1;margin-bottom:22px}
 
-.gcard-index{
-  position:absolute;top:14px;right:14px;z-index:2;
-  font-family:'Bebas Neue',sans-serif;
-  font-size:1.5rem;letter-spacing:.08em;
-  color:rgba(255,255,255,0.12);
-  line-height:1;
-}
+/* TECH TAGS */
+.gcard-tags{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:20px}
+.gtag{padding:3px 10px;background:var(--bg3);border:1px solid var(--border);border-radius:100px;font-size:.6rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--muted2)}
 
-.gcard-body{
-  padding:22px 26px 28px;
-  display:flex;flex-direction:column;flex:1;
-}
-.gcard-title{
-  font-family:'Bebas Neue',sans-serif;
-  font-size:1.7rem;letter-spacing:.06em;
-  color:var(--white);margin-bottom:6px;line-height:1;
-}
-.gcard-rule{
-  width:0;height:1px;
-  background:linear-gradient(90deg,var(--accent),transparent);
-  margin-bottom:12px;border-radius:1px;
-  transition:width .4s ease;
-}
-.gcard:hover .gcard-rule{width:40px}
-.gcard-desc{
-  font-size:.85rem;line-height:1.8;font-weight:300;
-  color:var(--muted2);flex:1;margin-bottom:24px;
-}
+.play-btn{display:inline-flex;align-items:center;gap:10px;align-self:flex-start;padding:11px 24px;background:transparent;border:1px solid var(--border2);border-radius:100px;color:var(--accent2);font-family:'Space Grotesk',sans-serif;font-size:.75rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;text-decoration:none;position:relative;overflow:hidden;transition:all .3s;cursor:none}
+.play-btn-fill{position:absolute;inset:0;background:var(--accent);transform:scaleX(0);transform-origin:left;transition:transform .32s cubic-bezier(.4,0,.2,1);border-radius:100px}
+.play-btn:hover{color:#000;border-color:transparent;box-shadow:0 0 32px rgba(0,212,170,.3)}
+.play-btn:hover .play-btn-fill{transform:scaleX(1)}
+.play-btn-label,.play-btn-arrow{position:relative;z-index:1}
+.play-btn-arrow{display:inline-block;transition:transform .2s}
+.play-btn:hover .play-btn-arrow{transform:translateX(4px)}
 
-.play-btn{
-  display:inline-flex;align-items:center;gap:10px;
-  align-self:flex-start;
-  padding:11px 24px;
-  background:transparent;
-  border:1px solid var(--border2);
-  border-radius:100px;
-  color:var(--accent2);
-  font-family:'DM Sans',sans-serif;
-  font-size:.78rem;font-weight:500;
-  letter-spacing:.1em;text-transform:uppercase;
-  text-decoration:none;
-  position:relative;overflow:hidden;
-  transition:all .3s;
-}
-.play-btn-bg{
-  position:absolute;inset:0;
-  background:linear-gradient(135deg,var(--accent),var(--accent2));
-  transform:scaleX(0);transform-origin:left;
-  transition:transform .32s cubic-bezier(.4,0,.2,1);
-  border-radius:100px;
-}
-.play-btn:hover{
-  color:#fff;border-color:transparent;
-  box-shadow:0 0 28px rgba(61,127,255,.35);
-}
-.play-btn:hover .play-btn-bg{transform:scaleX(1)}
-.play-btn-text,.play-btn-icon{position:relative;z-index:1}
-.play-btn-icon{
-  width:18px;height:18px;border-radius:50%;
-  background:rgba(255,255,255,0.15);
-  display:flex;align-items:center;justify-content:center;
-  transition:transform .25s;
-}
-.play-btn:hover .play-btn-icon{transform:translateX(3px)}
-.play-btn-icon svg{width:7px;height:7px;fill:currentColor;display:block}
+/* ═══════ SITES / OTHER PROJECTS ═══════ */
+#projects{padding:100px 0}
+.projects-head{text-align:center;margin-bottom:64px}
+.proj-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px}
+.proj-card{background:var(--bg2);border:1px solid var(--border);border-radius:18px;padding:24px;display:flex;flex-direction:column;gap:16px;text-decoration:none;transition:all .3s;position:relative;overflow:hidden;cursor:none}
+.proj-card::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(0,212,170,.04),transparent);opacity:0;transition:opacity .3s}
+.proj-card:hover{border-color:var(--border2);transform:translateY(-6px);box-shadow:0 16px 48px rgba(0,0,0,.4)}
+.proj-card:hover::before{opacity:1}
+.proj-icon{width:48px;height:48px;border-radius:14px;background:var(--bg3);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:1.4rem;flex-shrink:0}
+.proj-thumb{width:100%;aspect-ratio:16/9;border-radius:10px;overflow:hidden;border:1px solid var(--border);background:var(--bg3)}
+.proj-thumb img{width:100%;height:100%;object-fit:cover;filter:brightness(.7);transition:filter .3s}
+.proj-card:hover .proj-thumb img{filter:brightness(1)}
+.proj-name{font-size:1rem;font-weight:600;color:var(--white);margin-bottom:4px}
+.proj-url{font-size:.7rem;font-family:'JetBrains Mono',monospace;color:var(--muted)}
+.proj-arrow{margin-left:auto;width:32px;height:32px;border-radius:50%;border:1px solid var(--border);display:flex;align-items:center;justify-content:center;color:var(--muted);transition:all .2s;flex-shrink:0}
+.proj-card:hover .proj-arrow{border-color:var(--accent);color:var(--accent);transform:rotate(-45deg)}
+.proj-row{display:flex;align-items:center;gap:12px}
 
-/* ═══════════ FOOTER ═══════════ */
-footer{
-  position:relative;z-index:5;
-  padding:32px 32px 40px;
-  border-top:1px solid var(--border);
-  display:flex;align-items:center;justify-content:space-between;
-  flex-wrap:wrap;gap:12px;
-}
-.foot-left{
-  font-family:'Cormorant Garamond',serif;font-style:italic;
-  font-size:.95rem;color:var(--muted);
-}
-.foot-right{
-  font-size:.65rem;font-weight:400;letter-spacing:.2em;
-  text-transform:uppercase;color:var(--muted);opacity:.45;
-}
+/* ═══════ CONTACT ═══════ */
+#contact{padding:100px 0 140px}
+.contact-inner{background:var(--bg2);border:1px solid var(--border);border-radius:32px;padding:64px;position:relative;overflow:hidden;max-width:900px;margin:0 auto;margin-top:64px}
+.contact-inner::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--accent),var(--accent2),transparent)}
+.contact-glow{position:absolute;top:-80px;right:-80px;width:300px;height:300px;background:radial-gradient(circle,rgba(0,212,170,.07) 0%,transparent 70%);pointer-events:none}
+.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center}
+.contact-left{}
+.contact-intro{font-size:.75rem;font-weight:700;letter-spacing:.3em;text-transform:uppercase;color:var(--accent);margin-bottom:12px}
+.contact-title{font-family:'Playfair Display',serif;font-size:2.4rem;font-weight:900;color:var(--white);line-height:1.1;margin-bottom:16px}
+.contact-title em{font-style:italic;color:var(--accent)}
+.contact-body{font-size:.9rem;line-height:1.8;color:var(--muted2);margin-bottom:32px}
+.contact-links{display:flex;flex-direction:column;gap:12px}
+.contact-link{display:flex;align-items:center;gap:14px;padding:14px 18px;background:var(--bg3);border:1px solid var(--border);border-radius:14px;text-decoration:none;color:var(--cream);transition:all .25s;cursor:none}
+.contact-link:hover{border-color:var(--accent);background:var(--accent3);transform:translateX(6px)}
+.contact-link-icon{width:36px;height:36px;border-radius:10px;background:var(--accent3);display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0}
+.contact-link-text{}
+.contact-link-label{font-size:.6rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin-bottom:2px}
+.contact-link-val{font-size:.88rem;font-weight:500;color:var(--white)}
+.contact-link-arrow{margin-left:auto;color:var(--muted);transition:color .2s,transform .2s;flex-shrink:0}
+.contact-link:hover .contact-link-arrow{color:var(--accent);transform:translateX(4px)}
 
+.contact-right{}
+.contact-form{display:flex;flex-direction:column;gap:16px}
+.form-group{display:flex;flex-direction:column;gap:6px}
+.form-label{font-size:.65rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--muted)}
+.form-input,.form-textarea{background:var(--bg3);border:1px solid var(--border);border-radius:10px;padding:12px 16px;color:var(--cream);font-family:'Space Grotesk',sans-serif;font-size:.88rem;outline:none;transition:border-color .2s,box-shadow .2s;resize:none}
+.form-input::placeholder,.form-textarea::placeholder{color:var(--muted)}
+.form-input:focus,.form-textarea:focus{border-color:var(--accent2);box-shadow:0 0 0 3px rgba(0,212,170,.1)}
+.form-textarea{height:110px}
+.form-submit{padding:14px 28px;background:var(--accent);color:#000;font-family:'Space Grotesk',sans-serif;font-size:.8rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;border:none;border-radius:10px;cursor:none;transition:all .25s;display:flex;align-items:center;justify-content:center;gap:10px}
+.form-submit:hover{background:var(--accent2);transform:translateY(-2px);box-shadow:0 8px 28px rgba(0,212,170,.3)}
+.form-submit svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round}
+
+/* ═══════ FOOTER ═══════ */
+footer{position:relative;z-index:5;padding:28px 32px;border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px}
+.foot-l{font-family:'Space Grotesk',sans-serif;font-size:.78rem;color:var(--muted)}
+.foot-l strong{color:var(--accent2)}
+.foot-r{font-size:.65rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);opacity:.4}
+
+/* ═══════ ANIMATIONS ═══════ */
+@keyframes fadeUp{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:translateY(0)}}
+
+.reveal{opacity:0;transform:translateY(32px);transition:opacity .7s ease,transform .7s ease}
+.reveal.visible{opacity:1;transform:translateY(0)}
+.reveal-delay-1{transition-delay:.1s}
+.reveal-delay-2{transition-delay:.2s}
+.reveal-delay-3{transition-delay:.3s}
+
+/* ═══════ SCROLLBAR ═══════ */
 ::-webkit-scrollbar{width:3px}
 ::-webkit-scrollbar-track{background:var(--bg)}
-::-webkit-scrollbar-thumb{background:rgba(61,127,255,.25);border-radius:2px}
+::-webkit-scrollbar-thumb{background:rgba(0,212,170,.25);border-radius:2px}
 ::-webkit-scrollbar-thumb:hover{background:var(--accent)}
 
-/* ═══════════ RESPONSIVE ═══════════ */
-@media(max-width:768px){
-  .topnav{padding:0 14px}
-  .sites-btn{padding:7px 10px;gap:5px; font-size:.72rem}
-  .hero{padding:130px 20px 70px}
-  .games{padding:40px 16px 80px}
-  .game-grid{grid-template-columns:1fr;gap:16px}
-  .side-panel{width:100%;max-width:100vw}
-  footer{justify-content:center;text-align:center}
-  .hero-stats{flex-wrap:wrap;border-radius:16px}
-  .sites-dropdown{min-width:260px}
+/* ═══════ RESPONSIVE ═══════ */
+@media(max-width:900px){
+  .about-grid{grid-template-columns:1fr}
+  .contact-grid{grid-template-columns:1fr}
+  .contact-inner{padding:36px 24px}
+  .nav-links{display:none}
+  .nav-cta{display:none}
+  .ham-btn{display:flex}
 }
-@media(max-width:480px){
-  .gcard-body{padding:18px 18px 22px}
-  .panel-head{padding:72px 22px 22px}
-  .panel-body{padding:20px 22px 32px}
-  .drawer{width:280px}
-  .sites-dropdown{left:50%;transform:translateX(-50%) translateY(-6px);min-width:240px}
-  .sites-dropdown.open{transform:translateX(-50%) translateY(0)}
+@media(max-width:600px){
+  .nav{padding:0 20px}
+  .hero{padding:0 20px}
+  .section-wrap{padding:0 20px}
+  .h-stat{padding:12px 18px}
+  footer{justify-content:center;text-align:center}
+  .hero-stats{flex-wrap:wrap;border-radius:14px}
 }
 </style>
 </head>
 <body>
 
-<div class="drawer-overlay" id="drawerOverlay"></div>
-<div class="panel-overlay" id="panelOverlay"></div>
+<!-- Custom Cursor -->
+<div id="cursor"></div>
+<div id="cursor-ring"></div>
 
-<!-- ══════════════ TOP NAV ══════════════ -->
-<nav class="topnav">
+<!-- Particles Canvas -->
+<canvas id="particles-canvas"></canvas>
 
-  <!-- LEFT: Hamburger -->
-  <button class="ham-btn" id="hamBtn" aria-label="Open menu">
+<!-- ══════ NAV ══════ -->
+<nav class="nav">
+  <div class="nav-logo-wrap">
+    <div class="nav-logo">
+      <img src="images/Logo.png" alt="Logo" onerror="this.style.display='none';this.nextSibling.style.display='block'">
+      <span class="nav-logo-ph" style="display:none">🎮</span>
+    </div>
+    <div class="nav-brand">Praneeth <span>Kumar</span></div>
+  </div>
+
+  <div class="nav-links">
+    <a href="#about" class="nav-link">About</a>
+    <a href="#games" class="nav-link">Games</a>
+    <a href="#projects" class="nav-link">Projects</a>
+    <a href="#contact" class="nav-link">Contact</a>
+  </div>
+
+  <a href="mailto:praneethkumar89777@gmail.com" class="nav-cta">Hire Me</a>
+  <button class="ham-btn" id="hamBtn" aria-label="Toggle menu">
     <span></span><span></span><span></span>
   </button>
-
-  <!-- CENTER: My Sites Dropdown -->
-  <div class="nav-center">
-    <button class="sites-btn" id="sitesBtn" aria-label="My Sites" aria-expanded="false" aria-haspopup="true">
-      <span class="sites-btn-dot"></span>
-      <span class="sites-btn-label">My Sites</span>
-      <svg class="sites-caret" viewBox="0 0 16 16" aria-hidden="true">
-        <polyline points="4,6 8,10 12,6"/>
-      </svg>
-    </button>
-
-    <div class="sites-dropdown" id="sitesDropdown" role="menu">
-      <span class="sites-dd-label">My Websites</span>
-
-      <!-- ─────────────────────────────────────────────────
-           ADD YOUR SITES BELOW.
-           Copy a <a class="site-item"> block for each site.
-
-           site-thumb: replace "images/site1-cover.png"
-                       with your actual cover image path.
-                       The fallback emoji shows if image is missing.
-
-           site-item-name: your site's display name
-           site-item-url:  short URL shown below the name
-           href:           full URL (opens in new tab)
-      ──────────────────────────────────────────────────── -->
-
-      <a href="https://curvecraftmath.vercel.app" target="_blank" rel="noopener" class="site-item" role="menuitem">
-        <div class="site-thumb">
-          <img src="images/CurveCraft (1).png" alt="Site 1 cover"
-               onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
-          <span class="site-thumb-ph" style="display:none">🌐</span>
-        </div>
-        <div class="site-item-info">
-          <div class="site-item-name">CurveCraft Math</div>
-          <div class="site-item-url">curvecraftmath.vercel.app</div>
-        </div>
-        <svg class="site-item-arrow" viewBox="0 0 16 16" aria-hidden="true">
-          <path d="M3 8h10M9 4l4 4-4 4"/>
-        </svg>
-      </a>
-
-      <div class="sites-divider"></div>
-
-      <a href="https://flamesgame1.vercel.app" target="_blank" rel="noopener" class="site-item" role="menuitem">
-        <div class="site-thumb">
-          <img src="images/Flames.png" alt="Site 2 cover"
-               onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
-          <span class="site-thumb-ph" style="display:none">🎨</span>
-        </div>
-        <div class="site-item-info">
-          <div class="site-item-name">Flames</div>
-          <div class="site-item-url">flamesgame1.vercel.app</div>
-        </div>
-        <svg class="site-item-arrow" viewBox="0 0 16 16" aria-hidden="true">
-          <path d="M3 8h10M9 4l4 4-4 4"/>
-        </svg>
-      </a>
-      <a href="https://guess-sketch.onrender.com" target="_blank" rel="noopener" class="site-item" role="menuitem">
-        <div class="site-thumb">
-          <img src="images/guess-sketch.png" alt="Site 2 cover"
-               onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
-          <span class="site-thumb-ph" style="display:none">🎨</span>
-        </div>
-        <div class="site-item-info">
-          <div class="site-item-name">Guess Sketch</div>
-          <div class="site-item-url">guess-sketch.onrender.com</div>
-        </div>
-        <svg class="site-item-arrow" viewBox="0 0 16 16" aria-hidden="true">
-          <path d="M3 8h10M9 4l4 4-4 4"/>
-        </svg>
-      </a>
-
-      <div class="sites-divider"></div>
-
-      <a href="https://valentinegameapp.vercel.app" target="_blank" rel="noopener" class="site-item" role="menuitem">
-        <div class="site-thumb">
-          <img src="images/Val.png" alt="Site 3 cover"
-               onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
-          <span class="site-thumb-ph" style="display:none">🚀</span>
-        </div>
-        <div class="site-item-info">
-          <div class="site-item-name">Valentine</div>
-          <div class="site-item-url">valentinegameapp.vercel.app</div>
-        </div>
-        <svg class="site-item-arrow" viewBox="0 0 16 16" aria-hidden="true">
-          <path d="M3 8h10M9 4l4 4-4 4"/>
-        </svg>
-      </a>
-
-      <!-- Add more sites by copying the block above and changing the details -->
-
-    </div>
-  </div>
-
-  <!-- RIGHT: Logo -->
-  <div class="nav-right">
-    <div class="nav-logo" id="navLogo">
-      <img src="images/Logo.png" alt="Logo" id="navLogoImg"
-           onerror="this.style.display='none';document.getElementById('navLogoPh').style.display='block'">
-      <span class="nav-logo-ph" id="navLogoPh" style="display:none">🎮</span>
-    </div>
-  </div>
-
 </nav>
 
-<!-- ══════════ SLIDE DRAWER ══════════ -->
-<div class="drawer" id="drawer">
-  <div class="drawer-head">
-    <div class="drawer-eyebrow">Navigation</div>
-    <div class="drawer-name">Praneeth <em>Kumar</em></div>
-  </div>
-  <nav class="drawer-nav">
-    <button class="drawer-link" data-panel="about">
-      <span class="drawer-link-icon">👤</span>
-      About Me
-    </button>
-    <button class="drawer-link" data-panel="github">
-      <span class="drawer-link-icon">⌥</span>
-      GitHub
-    </button>
-    <button class="drawer-link" data-panel="linkedin">
-      <span class="drawer-link-icon">in</span>
-      LinkedIn
-    </button>
-  </nav>
-  <div class="drawer-footer">
-    <div class="drawer-footer-text">Unity Game Developer</div>
-  </div>
+<!-- Mobile Menu -->
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#about" class="nav-link" onclick="closeMobile()">About</a>
+  <a href="#games" class="nav-link" onclick="closeMobile()">Games</a>
+  <a href="#projects" class="nav-link" onclick="closeMobile()">Projects</a>
+  <a href="#contact" class="nav-link" onclick="closeMobile()">Contact</a>
+  <a href="mailto:praneethkumar89777@gmail.com" class="btn-primary" style="margin-top:16px" onclick="closeMobile()">
+    Hire Me
+    <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+  </a>
 </div>
 
-<!-- ════════ ABOUT PANEL ════════ -->
-<aside class="side-panel" id="panel-about">
-  <button class="panel-close" data-close>✕</button>
-  <div class="panel-head">
-    <div class="panel-eyebrow">Developer Profile</div>
-    <div class="panel-title">About <em>Me</em></div>
+<!-- ══════ HERO ══════ -->
+<header class="hero" id="hero">
+  <div class="hero-eyebrow">
+    <span class="hero-eyebrow-dot"></span>
+    <span>Unity Game Developer · India</span>
   </div>
-  <div class="panel-body">
-    <div class="about-rows">
-      <div class="about-row">
-        <div class="about-key">Name</div>
-        <div class="about-val">Praneeth Kumar</div>
-      </div>
-      <div class="about-row">
-        <div class="about-key">Location</div>
-        <div class="about-val">Ongole, Andhra Pradesh, India</div>
-      </div>
-      <div class="about-row">
-        <div class="about-key">Phone</div>
-        <div class="about-val"><a href="tel:8977740698">+91 89777 40698</a></div>
-      </div>
-      <div class="about-row">
-        <div class="about-key">Email</div>
-        <div class="about-val"><a href="mailto:praneethkumar89777@gmail.com">praneethkumar89777@gmail.com</a></div>
-      </div>
-    </div>
-  </div>
-</aside>
 
-<!-- ════════ GITHUB PANEL ════════ -->
-<aside class="side-panel" id="panel-github">
-  <button class="panel-close" data-close>✕</button>
-  <div class="panel-head">
-    <div class="panel-eyebrow">Source Code</div>
-    <div class="panel-title">My <em>GitHub</em></div>
-  </div>
-  <div class="panel-body">
-    <div class="social-wrap">
-      <div class="social-pill">
-        <span class="social-pill-icon">⌥</span>
-        <div>
-          <div class="s-t1">pranith00077</div>
-          <div class="s-t2">github.com/pranith00077</div>
-        </div>
-      </div>
-      <p class="social-quote">Explore my open-source Unity projects, game repositories, and development experiments.</p>
-      <a href="https://github.com/pranith00077" target="_blank" rel="noopener" class="social-cta">
-        Visit GitHub
-        <svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
-      </a>
-    </div>
-  </div>
-</aside>
+  <h1 class="hero-name">
+    <span class="hero-name-line">PRANEETH</span>
+    <span class="hero-name-line accent-line">KUMAR</span>
+  </h1>
 
-<!-- ════════ LINKEDIN PANEL ════════ -->
-<aside class="side-panel" id="panel-linkedin">
-  <button class="panel-close" data-close>✕</button>
-  <div class="panel-head">
-    <div class="panel-eyebrow">Professional Network</div>
-    <div class="panel-title">My <em>LinkedIn</em></div>
+  <div class="hero-typed-wrap">
+    <span class="hero-typed-prefix">I build</span>
+    <span class="hero-typed" id="typed-text"></span><span class="cursor-blink hero-typed" style="margin-left:2px">|</span>
   </div>
-  <div class="panel-body">
-    <div class="social-wrap">
-      <div class="social-pill">
-        <span class="social-pill-icon">in</span>
-        <div>
-          <div class="s-t1">Praneet Kumar</div>
-          <div class="s-t2">linkedin.com/in/praneet-kumar-2b5471412</div>
-        </div>
-      </div>
-      <p class="social-quote">Connect with me professionally — let's discuss game development, collaborations, and opportunities.</p>
-      <a href="https://www.linkedin.com/in/praneeth-kumar-4b5926406//" target="_blank" rel="noopener" class="social-cta">
-        Visit LinkedIn
-        <svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
-      </a>
-    </div>
-  </div>
-</aside>
 
-<!-- ════════════ HERO ════════════ -->
-<header class="hero">
-  <div class="hero-content">
-    <div class="hero-badge">
-      <span class="hero-badge-dot"></span>
-      <span>Game Portfolio</span>
+  <p class="hero-desc">Unity game developer crafting immersive 2D &amp; 3D experiences for PC and mobile. Passionate about gameplay mechanics, interactive design, and pushing the limits of real-time rendering.</p>
+
+  <div class="hero-btns">
+    <a href="#games" class="btn-primary">
+      Explore My Games
+      <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+    </a>
+    <a href="#contact" class="btn-outline">Let's Connect</a>
+  </div>
+
+  <div class="hero-stats">
+    <div class="h-stat">
+      <span class="h-stat-n" id="counter-games">0</span>
+      <span class="h-stat-l">Games</span>
     </div>
-    <h1 class="hero-h1">
-      MY UNITY
-      <span class="line2">GAMES</span>
-    </h1>
-    <p class="hero-sub">Play my games online — directly in your browser</p>
-    <div class="hero-stats">
-      <div class="hero-stat">
-        <span class="hero-stat-n">4</span>
-        <span class="hero-stat-l">Games</span>
-      </div>
-      <div class="hero-stat">
-        <span class="hero-stat-n">PC</span>
-        <span class="hero-stat-l">& Mobile</span>
-      </div>
-      <div class="hero-stat">
-        <span class="hero-stat-n">WEB</span>
-        <span class="hero-stat-l">Playable</span>
-      </div>
+    
+    <div class="h-stat">
+      <span class="h-stat-n">0</span>
+      <span class="h-stat-l">Years Exp</span>
     </div>
+    <div class="h-stat">
+      <span class="h-stat-n">PC+</span>
+      <span class="h-stat-l">Platforms</span>
+    </div>
+  </div>
+
+  <div class="scroll-hint">
+    <span>Scroll</span>
+    <div class="scroll-line"></div>
   </div>
 </header>
 
-<!-- ════════════ GAMES ════════════ -->
-<section class="games">
-  <div class="section-head">
-    <div class="section-num">03</div>
-    <div class="section-chip">Available Now</div>
-    <div class="section-title">Tap to Play</div>
-  </div>
-  <div class="game-grid">
-
-    <div class="gcard">
-      <div class="gcard-img">
-        <img src="images/flag-raid-icon.png" alt="Flag Raid">
-        <div class="gcard-badge">PC Game</div>
-        <div class="gcard-index">01</div>
+<!-- ══════ ABOUT ══════ -->
+<section id="about">
+  <div class="section-wrap">
+    <div class="about-grid">
+      <div class="about-visual reveal">
+        <div class="about-card">
+          <div class="about-avatar">🎮</div>
+          <div class="about-card-name">Praneeth Kumar</div>
+          <div class="about-card-role">Unity Game Developer</div>
+          <div class="about-card-row">
+            <div class="about-row-icon">📍</div>
+            <div>
+              <div class="about-row-key">Location</div>
+              <div class="about-row-val">Ongole, Andhra Pradesh, India</div>
+            </div>
+          </div>
+          <div class="about-card-row">
+            <div class="about-row-icon">📞</div>
+            <div>
+              <div class="about-row-key">Phone</div>
+              <div class="about-row-val"><a href="tel:8977740698">+91 89777 40698</a></div>
+            </div>
+          </div>
+          <div class="about-card-row">
+            <div class="about-row-icon">✉️</div>
+            <div>
+              <div class="about-row-key">Email</div>
+              <div class="about-row-val"><a href="mailto:praneethkumar89777@gmail.com">praneethkumar89777@gmail.com</a></div>
+            </div>
+          </div>
+          <div class="about-card-row">
+            <div class="about-row-icon">💼</div>
+            <div>
+              <div class="about-row-key">Open to</div>
+              <div class="about-row-val">Freelance &amp; Full-time Roles</div>
+            </div>
+          </div>
+        </div>
+        <div class="about-float">🕹️</div>
       </div>
-      <div class="gcard-body">
-        <div class="gcard-title">Flag Raid</div>
-        <div class="gcard-rule"></div>
-        <p class="gcard-desc">Collect flags, defeat enemies, survive attacks, and reach the destination.</p>
-        <a href="FlagRadiWeb/index.html" class="play-btn">
-          <span class="play-btn-bg"></span>
-          <span class="play-btn-text">Play Now</span>
-          <span class="play-btn-icon">
-            <svg viewBox="0 0 8 8"><polygon points="1,1 7,4 1,7"/></svg>
-          </span>
-        </a>
+
+      <div class="about-text-side reveal reveal-delay-1">
+        <div>
+          <div class="section-label">Who I Am</div>
+          <h2 class="section-title">Crafting <em>Worlds</em><br>Through Code</h2>
+        </div>
+        <p class="about-lead">I'm a <em>Unity Game Developer</em> from Andhra Pradesh, India — turning ideas into playable experiences that players actually enjoy.</p>
+        <p class="about-body">With hands-on experience in both PC and mobile game development, I specialize in designing tight gameplay loops, smooth physics interactions, and polished UIs. Every game I ship is a step toward mastering the craft.</p>
+
+        <div>
+          <div class="exp-title">Core Skills</div>
+          <div class="skills-grid">
+            <span class="skill-tag">Unity Engine</span>
+            <span class="skill-tag">C#</span>
+            <span class="skill-tag">2D Game Dev</span>
+            <span class="skill-tag">3D Game Dev</span>
+            <span class="skill-tag">Mobile (Android)</span>
+            <span class="skill-tag">WebGL Build</span>
+            <span class="skill-tag">Physics Systems</span>
+            <span class="skill-tag">UI/UX Design</span>
+            <span class="skill-tag">Git / GitHub</span>
+            <span class="skill-tag">HTML / CSS / JS</span>
+          </div>
+        </div>
+
+        <div>
+          <div class="exp-title">Tools &amp; Platforms</div>
+          <div class="exp-item">
+            <div class="exp-dot"></div>
+            <div>
+              <div class="exp-name">Unity 2021 – 2023 LTS</div>
+              <div class="exp-sub">Primary game engine · WebGL, Android exports</div>
+            </div>
+          </div>
+          <div class="exp-item">
+            <div class="exp-dot"></div>
+            <div>
+              <div class="exp-name">Visual Studio Code</div>
+              <div class="exp-sub">C# scripting · web development</div>
+            </div>
+          </div>
+          <div class="exp-item">
+            <div class="exp-dot"></div>
+            <div>
+              <div class="exp-name">Vercel &amp; GitHub Pages</div>
+              <div class="exp-sub">Deployment for games and web projects</div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
-
-    <div class="gcard">
-      <div class="gcard-img">
-        <img src="images/SilentVillage.png" alt="Silent Village">
-        <div class="gcard-badge">PC Game</div>
-        <div class="gcard-index">02</div>
-      </div>
-      <div class="gcard-body">
-        <div class="gcard-title">Silent Village</div>
-        <div class="gcard-rule"></div>
-        <p class="gcard-desc">Survive, clear checkpoints, eliminate enemies, and reach the finish line.</p>
-        <a href="SilentVillage1/index.html" class="play-btn">
-          <span class="play-btn-bg"></span>
-          <span class="play-btn-text">Play Now</span>
-          <span class="play-btn-icon">
-            <svg viewBox="0 0 8 8"><polygon points="1,1 7,4 1,7"/></svg>
-          </span>
-        </a>
-      </div>
-    </div>
-
-    <div class="gcard">
-      <div class="gcard-img">
-        <img src="images/SnookersGameIcon.png" alt="Snooker King">
-        <div class="gcard-badge">Mobile</div>
-        <div class="gcard-index">03</div>
-      </div>
-      <div class="gcard-body">
-        <div class="gcard-title">Snooker King</div>
-        <div class="gcard-rule"></div>
-        <p class="gcard-desc">Classic snooker crafted for mobile — precision, patience, and pure skill.</p>
-        <a href="SnookerKing/index.html" class="play-btn">
-          <span class="play-btn-bg"></span>
-          <span class="play-btn-text">Play Now</span>
-          <span class="play-btn-icon">
-            <svg viewBox="0 0 8 8"><polygon points="1,1 7,4 1,7"/></svg>
-          </span>
-        </a>
-      </div>
-    </div>
-
-    <div class="gcard">
-      <div class="gcard-img">
-        <img src="images/ApexRunner.png" alt="Apex Runner">
-        <div class="gcard-badge">Mobile</div>
-        <div class="gcard-index">04</div>
-      </div>
-      <div class="gcard-body">
-        <div class="gcard-title">Apex Runner</div>
-        <div class="gcard-rule"></div>
-        <p class="gcard-desc">Experience the thrill of apex sprint on your mobile device.</p>
-        <a href="ApexSprint/index.html" class="play-btn">
-          <span class="play-btn-bg"></span>
-          <span class="play-btn-text">Play Now</span>
-          <span class="play-btn-icon">
-            <svg viewBox="0 0 8 8"><polygon points="1,1 7,4 1,7"/></svg>
-          </span>
-        </a>
-      </div>
-    </div>
-
   </div>
 </section>
 
+<!-- ══════ GAMES ══════ -->
+<section id="games">
+  <div class="section-wrap">
+    <div class="games-head reveal">
+      <div class="section-label" style="justify-content:center">My Work</div>
+      <h2 class="section-title">Unity <em>Games</em></h2>
+      <p style="font-size:.9rem;color:var(--muted2);margin-top:10px;font-weight:300">All games playable directly in your browser · No download required</p>
+    </div>
+    <div class="game-grid">
+
+      <div class="gcard">
+        <div class="gcard-img">
+          <img src="images/flag-raid-icon.png" alt="Flag Raid">
+          <div class="gcard-badge">PC Game</div>
+          <div class="gcard-num">01</div>
+        </div>
+        <div class="gcard-body">
+          <div class="gcard-title">Flag Raid</div>
+          <div class="gcard-line"></div>
+          <p class="gcard-desc">Collect flags, defeat enemies, survive attacks, and reach the destination. A fast-paced action game with tight controls.</p>
+          <div class="gcard-tags">
+            <span class="gtag">Unity</span><span class="gtag">C#</span><span class="gtag">3D</span><span class="gtag">WebGL</span>
+          </div>
+          <a href="FlagRadiWeb/index.html" class="play-btn">
+            <span class="play-btn-fill"></span>
+            <span class="play-btn-label">Play Now</span>
+            <span class="play-btn-arrow">→</span>
+          </a>
+        </div>
+      </div>
+
+      <div class="gcard">
+        <div class="gcard-img">
+          <img src="images/SilentVillage.png" alt="Silent Village">
+          <div class="gcard-badge">PC Game</div>
+          <div class="gcard-num">02</div>
+        </div>
+        <div class="gcard-body">
+          <div class="gcard-title">Silent Village</div>
+          <div class="gcard-line"></div>
+          <p class="gcard-desc">Survive, clear checkpoints, eliminate enemies, and reach the finish line in this atmospheric stealth-action game.</p>
+          <div class="gcard-tags">
+            <span class="gtag">Unity</span><span class="gtag">C#</span><span class="gtag">3D</span><span class="gtag">Stealth</span>
+          </div>
+          <a href="SilentVillage1/index.html" class="play-btn">
+            <span class="play-btn-fill"></span>
+            <span class="play-btn-label">Play Now</span>
+            <span class="play-btn-arrow">→</span>
+          </a>
+        </div>
+      </div>
+
+      <div class="gcard">
+        <div class="gcard-img">
+          <img src="images/SnookersGameIcon.png" alt="Snooker King">
+          <div class="gcard-badge">Mobile</div>
+          <div class="gcard-num">03</div>
+        </div>
+        <div class="gcard-body">
+          <div class="gcard-title">Snooker King</div>
+          <div class="gcard-line"></div>
+          <p class="gcard-desc">Classic snooker crafted for mobile — precision physics, realistic ball mechanics, and pure billiards skill.</p>
+          <div class="gcard-tags">
+            <span class="gtag">Unity</span><span class="gtag">2D</span><span class="gtag">Physics</span><span class="gtag">Mobile</span>
+          </div>
+          <a href="SnookerKing/index.html" class="play-btn">
+            <span class="play-btn-fill"></span>
+            <span class="play-btn-label">Play Now</span>
+            <span class="play-btn-arrow">→</span>
+          </a>
+        </div>
+      </div>
+
+      <div class="gcard">
+        <div class="gcard-img">
+          <img src="images/ApexRunner.png" alt="Apex Runner">
+          <div class="gcard-badge">Mobile</div>
+          <div class="gcard-num">04</div>
+        </div>
+        <div class="gcard-body">
+          <div class="gcard-title">Apex Runner</div>
+          <div class="gcard-line"></div>
+          <p class="gcard-desc">Experience the thrill of endless sprint on mobile. Dodge obstacles, collect power-ups, and chase a high score.</p>
+          <div class="gcard-tags">
+            <span class="gtag">Unity</span><span class="gtag">Endless Runner</span><span class="gtag">Mobile</span>
+          </div>
+          <a href="ApexSprint/index.html" class="play-btn">
+            <span class="play-btn-fill"></span>
+            <span class="play-btn-label">Play Now</span>
+            <span class="play-btn-arrow">→</span>
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ══════ OTHER PROJECTS ══════ -->
+<section id="projects">
+  <div class="section-wrap">
+    <div class="projects-head reveal">
+      <div class="section-label" style="justify-content:center">Web Projects</div>
+      <h2 class="section-title">Other <em>Projects</em></h2>
+      <p style="font-size:.9rem;color:var(--muted2);margin-top:10px;font-weight:300">Web apps &amp; tools I've built alongside game dev</p>
+    </div>
+    <div class="proj-grid">
+
+      <a href="https://curvecraftmath.vercel.app" target="_blank" rel="noopener" class="proj-card reveal">
+        <div class="proj-thumb">
+          <img src="images/CurveCraft (1).png" alt="CurveCraft Math" onerror="this.style.display='none'">
+        </div>
+        <div class="proj-row">
+          <div>
+            <div class="proj-name">CurveCraft Math</div>
+            <div class="proj-url">curvecraftmath.vercel.app</div>
+          </div>
+          <div class="proj-arrow">↗</div>
+        </div>
+      </a>
+
+      <a href="https://flamesgame1.vercel.app" target="_blank" rel="noopener" class="proj-card reveal reveal-delay-1">
+        <div class="proj-thumb">
+          <img src="images/Flames.png" alt="Flames" onerror="this.style.display='none'">
+        </div>
+        <div class="proj-row">
+          <div>
+            <div class="proj-name">Flames</div>
+            <div class="proj-url">flamesgame1.vercel.app</div>
+          </div>
+          <div class="proj-arrow">↗</div>
+        </div>
+      </a>
+
+      <a href="https://guess-sketch.onrender.com" target="_blank" rel="noopener" class="proj-card reveal reveal-delay-2">
+        <div class="proj-thumb">
+          <img src="images/guess-sketch.png" alt="Guess Sketch" onerror="this.style.display='none'">
+        </div>
+        <div class="proj-row">
+          <div>
+            <div class="proj-name">Guess Sketch</div>
+            <div class="proj-url">guess-sketch.onrender.com</div>
+          </div>
+          <div class="proj-arrow">↗</div>
+        </div>
+      </a>
+
+      <a href="https://valentinegameapp.vercel.app" target="_blank" rel="noopener" class="proj-card reveal reveal-delay-3">
+        <div class="proj-thumb">
+          <img src="images/Val.png" alt="Valentine" onerror="this.style.display='none'">
+        </div>
+        <div class="proj-row">
+          <div>
+            <div class="proj-name">Valentine</div>
+            <div class="proj-url">valentinegameapp.vercel.app</div>
+          </div>
+          <div class="proj-arrow">↗</div>
+        </div>
+      </a>
+
+    </div>
+  </div>
+</section>
+
+<!-- ══════ CONTACT ══════ -->
+<section id="contact">
+  <div class="section-wrap">
+    <div class="contact-inner reveal">
+      <div class="contact-glow"></div>
+      <div class="contact-grid">
+        <div class="contact-left">
+          <div class="contact-intro">Get in Touch</div>
+          <h2 class="contact-title">Let's Build<br><em>Something</em><br>Together</h2>
+          <p class="contact-body">Open for freelance game projects, collaborations, and full-time opportunities. Let's talk!</p>
+          <div class="contact-links">
+            <a href="mailto:praneethkumar89777@gmail.com" class="contact-link">
+              <div class="contact-link-icon">✉️</div>
+              <div class="contact-link-text">
+                <div class="contact-link-label">Email</div>
+                <div class="contact-link-val">praneethkumar89777@gmail.com</div>
+              </div>
+              <span class="contact-link-arrow">→</span>
+            </a>
+            <a href="tel:8977740698" class="contact-link">
+              <div class="contact-link-icon">📞</div>
+              <div class="contact-link-text">
+                <div class="contact-link-label">Phone</div>
+                <div class="contact-link-val">+91 89777 40698</div>
+              </div>
+              <span class="contact-link-arrow">→</span>
+            </a>
+            <a href="https://github.com/pranith00077" target="_blank" rel="noopener" class="contact-link">
+              <div class="contact-link-icon">⌥</div>
+              <div class="contact-link-text">
+                <div class="contact-link-label">GitHub</div>
+                <div class="contact-link-val">github.com/pranith00077</div>
+              </div>
+              <span class="contact-link-arrow">→</span>
+            </a>
+            <a href="https://www.linkedin.com/in/praneeth-kumar-4b5926406/" target="_blank" rel="noopener" class="contact-link">
+              <div class="contact-link-icon">in</div>
+              <div class="contact-link-text">
+                <div class="contact-link-label">LinkedIn</div>
+                <div class="contact-link-val">Praneeth Kumar</div>
+              </div>
+              <span class="contact-link-arrow">→</span>
+            </a>
+          </div>
+        </div>
+        <div class="contact-right">
+          <form class="contact-form" onsubmit="handleForm(event)">
+            <div class="form-group">
+              <label class="form-label">Your Name</label>
+              <input class="form-input" type="text" placeholder="e.g. Ravi Shankar" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Email Address</label>
+              <input class="form-input" type="email" placeholder="you@example.com" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Subject</label>
+              <input class="form-input" type="text" placeholder="Game dev collaboration...">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Message</label>
+              <textarea class="form-textarea" placeholder="Tell me about your project or idea..."></textarea>
+            </div>
+            <button class="form-submit" type="submit" id="submitBtn">
+              Send Message
+              <svg viewBox="0 0 24 24"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════ FOOTER ══════ -->
 <footer>
-  <div class="foot-left">Made with care by Praneeth Kumar</div>
-  <div class="foot-right">© 2026 My Unity Games</div>
+  <div class="foot-l">Designed &amp; built with care by <strong>Praneeth Kumar</strong></div>
+  <div class="foot-r">© 2026 · Unity Game Developer</div>
 </footer>
 
 <script>
-// ── DRAWER ──
-const hamBtn        = document.getElementById('hamBtn');
-const drawer        = document.getElementById('drawer');
-const drawerOverlay = document.getElementById('drawerOverlay');
-
-function openDrawer(){
-  drawer.classList.add('open');
-  drawerOverlay.classList.add('active');
-  hamBtn.classList.add('open');
-}
-function closeDrawer(){
-  drawer.classList.remove('open');
-  drawerOverlay.classList.remove('active');
-  hamBtn.classList.remove('open');
-}
-
-hamBtn.addEventListener('click', () =>
-  drawer.classList.contains('open') ? closeDrawer() : openDrawer()
-);
-drawerOverlay.addEventListener('click', closeDrawer);
-
-// ── MY SITES DROPDOWN ──
-const sitesBtn      = document.getElementById('sitesBtn');
-const sitesDropdown = document.getElementById('sitesDropdown');
-
-function openSites(){
-  sitesBtn.classList.add('open');
-  sitesDropdown.classList.add('open');
-  sitesBtn.setAttribute('aria-expanded','true');
-}
-function closeSites(){
-  sitesBtn.classList.remove('open');
-  sitesDropdown.classList.remove('open');
-  sitesBtn.setAttribute('aria-expanded','false');
-}
-
-sitesBtn.addEventListener('click', (e) => {
-  e.stopPropagation();
-  sitesDropdown.classList.contains('open') ? closeSites() : openSites();
+// ── CURSOR ──
+const cursor = document.getElementById('cursor');
+const ring = document.getElementById('cursor-ring');
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cursor.style.left=mx+'px';cursor.style.top=my+'px'});
+function animRing(){rx+=(mx-rx)*.12;ry+=(my-ry)*.12;ring.style.left=rx+'px';ring.style.top=ry+'px';requestAnimationFrame(animRing)}
+animRing();
+document.querySelectorAll('a,button,.gcard,.proj-card').forEach(el=>{
+  el.addEventListener('mouseenter',()=>{cursor.style.width='20px';cursor.style.height='20px';ring.style.width='56px';ring.style.height='56px'});
+  el.addEventListener('mouseleave',()=>{cursor.style.width='12px';cursor.style.height='12px';ring.style.width='40px';ring.style.height='40px'});
 });
 
-// Close when clicking outside
-document.addEventListener('click', (e) => {
-  if(!sitesBtn.contains(e.target) && !sitesDropdown.contains(e.target)){
-    closeSites();
-  }
-});
-
-// Close on Escape
-document.addEventListener('keydown', (e) => {
-  if(e.key === 'Escape') closeSites();
-});
-
-// ── SIDE PANELS ──
-const panelOverlay = document.getElementById('panelOverlay');
-
-function closeAllPanels(){
-  document.querySelectorAll('.side-panel').forEach(p => p.classList.remove('open'));
-  document.querySelectorAll('.drawer-link').forEach(b => b.classList.remove('active'));
-  panelOverlay.classList.remove('active');
+// ── PARTICLES ──
+const canvas = document.getElementById('particles-canvas');
+const ctx = canvas.getContext('2d');
+let particles=[];
+function resizeCanvas(){canvas.width=window.innerWidth;canvas.height=window.innerHeight}
+resizeCanvas();
+window.addEventListener('resize',resizeCanvas);
+for(let i=0;i<80;i++){
+  particles.push({x:Math.random()*window.innerWidth,y:Math.random()*window.innerHeight,r:Math.random()*1.5+.3,vx:(Math.random()-.5)*.3,vy:(Math.random()-.5)*.3,o:Math.random()*.5+.1});
 }
-
-document.querySelectorAll('[data-panel]').forEach(btn => {
-  btn.addEventListener('click', () => {
-    const id    = btn.dataset.panel;
-    const panel = document.getElementById('panel-' + id);
-    const was   = panel.classList.contains('open');
-    closeAllPanels();
-    closeDrawer();
-    if(!was){
-      panel.classList.add('open');
-      panelOverlay.classList.add('active');
-      document.querySelectorAll(`[data-panel="${id}"]`).forEach(b => b.classList.add('active'));
-    }
+function drawParticles(){
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  particles.forEach(p=>{
+    ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+    ctx.fillStyle=`rgba(0,212,170,${p.o})`;ctx.fill();
+    p.x+=p.vx;p.y+=p.vy;
+    if(p.x<0||p.x>canvas.width)p.vx*=-1;
+    if(p.y<0||p.y>canvas.height)p.vy*=-1;
   });
-});
+  requestAnimationFrame(drawParticles);
+}
+drawParticles();
 
-document.querySelectorAll('[data-close]').forEach(btn =>
-  btn.addEventListener('click', closeAllPanels)
-);
-panelOverlay.addEventListener('click', closeAllPanels);
+// ── TYPED TEXT ──
+const phrases=['immersive PC games.','thrilling mobile games.','WebGL experiences.','clean C# systems.','gameplay that hooks.'];
+let pi=0,ci=0,del=false;
+const typed=document.getElementById('typed-text');
+function typeLoop(){
+  const phrase=phrases[pi];
+  if(!del){typed.textContent=phrase.slice(0,++ci);if(ci===phrase.length){del=true;setTimeout(typeLoop,1600);return}}
+  else{typed.textContent=phrase.slice(0,--ci);if(ci===0){del=false;pi=(pi+1)%phrases.length}}
+  setTimeout(typeLoop,del?42:80);
+}
+setTimeout(typeLoop,1200);
+
+// ── COUNTERS ──
+function animCounter(el,target,suffix=''){
+  let n=0;const step=Math.ceil(target/40);
+  const t=setInterval(()=>{n=Math.min(n+step,target);el.textContent=n+(suffix);if(n>=target)clearInterval(t)},40);
+}
+const obsC=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting){animCounter(document.getElementById('counter-games'),4);animCounter(document.getElementById('counter-proj'),7);obsC.disconnect()}});
+},{threshold:.5});
+obsC.observe(document.getElementById('counter-games'));
+
+// ── REVEAL ON SCROLL ──
+const revEls=document.querySelectorAll('.reveal');
+const obs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible')})},{threshold:.12});
+revEls.forEach(el=>obs.observe(el));
+
+// ── MOBILE MENU ──
+const hamBtn=document.getElementById('hamBtn');
+const mobileMenu=document.getElementById('mobileMenu');
+hamBtn.addEventListener('click',()=>{hamBtn.classList.toggle('open');mobileMenu.classList.toggle('open')});
+function closeMobile(){hamBtn.classList.remove('open');mobileMenu.classList.remove('open')}
+
+// ── ACTIVE NAV LINK ──
+const sections=document.querySelectorAll('section[id],header[id]');
+const navLinks=document.querySelectorAll('.nav-link[href^="#"]');
+const navObs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting){navLinks.forEach(l=>l.classList.remove('active'));const l=document.querySelector(`.nav-link[href="#${e.target.id}"]`);if(l)l.classList.add('active')}});
+},{threshold:.4});
+sections.forEach(s=>navObs.observe(s));
+
+// ── FORM ──
+function handleForm(e){
+  e.preventDefault();
+  const btn=document.getElementById('submitBtn');
+  btn.textContent='Message Sent ✓';
+  btn.style.background='#00a882';
+  btn.disabled=true;
+  setTimeout(()=>{btn.innerHTML='Send Message <svg viewBox="0 0 24 24" style="width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>';btn.style.background='';btn.disabled=false;e.target.reset()},3000);
+}
+
+// ── GCARD HOVER PARALLAX ──
+document.querySelectorAll('.gcard').forEach(card=>{
+  card.addEventListener('mousemove',e=>{
+    const r=card.getBoundingClientRect();
+    const x=(e.clientX-r.left)/r.width-.5;
+    const y=(e.clientY-r.top)/r.height-.5;
+    card.style.transform=`translateY(-12px) rotateX(${-y*6}deg) rotateY(${x*6}deg) scale(1.008)`;
+  });
+  card.addEventListener('mouseleave',()=>{card.style.transform='';});
+});
 </script>
 </body>
 </html>
