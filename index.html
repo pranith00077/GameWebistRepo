@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -34,75 +33,52 @@
 html{scroll-behavior:smooth}
 body{font-family:'Space Grotesk',sans-serif;background:var(--bg);color:var(--cream);min-height:100vh;overflow-x:hidden;cursor:none}
 
-/* custom cursor */
 #cursor{position:fixed;width:12px;height:12px;background:var(--accent);border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:width .2s,height .2s,opacity .2s;mix-blend-mode:difference}
 #cursor-ring{position:fixed;width:40px;height:40px;border:1px solid rgba(0,212,170,0.4);border-radius:50%;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:all .12s ease-out}
 body:hover #cursor{opacity:1}
 
-/* noise overlay */
 body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");pointer-events:none;z-index:1;opacity:.6}
-
-/* ambient glows */
 body::after{content:'';position:fixed;inset:0;background:radial-gradient(ellipse 50% 40% at 80% 10%,rgba(0,212,170,0.05) 0%,transparent 65%),radial-gradient(ellipse 60% 30% at 10% 90%,rgba(0,212,170,0.04) 0%,transparent 60%);pointer-events:none;z-index:0}
 
-/* ═══════ CANVAS PARTICLES ═══════ */
 #particles-canvas{position:fixed;inset:0;z-index:2;pointer-events:none;opacity:.5}
 
-/* ═══════ TOP NAV ═══════ */
 .nav{position:fixed;top:0;left:0;right:0;height:var(--nav-h);background:rgba(8,10,16,0.85);backdrop-filter:blur(28px) saturate(1.6);border-bottom:1px solid var(--border);z-index:100;display:flex;align-items:center;justify-content:space-between;padding:0 32px}
-
 .nav-logo-wrap{display:flex;align-items:center;gap:12px}
 .nav-logo{width:36px;height:36px;border-radius:8px;border:1px solid var(--border2);overflow:hidden;background:var(--bg3);display:flex;align-items:center;justify-content:center;flex-shrink:0}
 .nav-logo img{width:100%;height:100%;object-fit:cover}
 .nav-logo-ph{font-size:1.1rem}
 .nav-brand{font-family:'Space Grotesk',sans-serif;font-size:.85rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--white)}
 .nav-brand span{color:var(--accent)}
-
 .nav-links{display:flex;align-items:center;gap:6px}
 .nav-link{padding:8px 16px;border-radius:8px;background:none;border:none;color:var(--muted2);font-family:'Space Grotesk',sans-serif;font-size:.8rem;font-weight:500;letter-spacing:.06em;cursor:none;text-decoration:none;transition:color .2s,background .2s}
 .nav-link:hover{color:var(--white);background:var(--surface2)}
 .nav-link.active{color:var(--accent)}
-
 .nav-cta{padding:9px 20px;background:var(--accent);border-radius:8px;border:none;color:#000;font-family:'Space Grotesk',sans-serif;font-size:.78rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;cursor:none;text-decoration:none;transition:all .25s}
 .nav-cta:hover{background:var(--accent2);transform:translateY(-1px);box-shadow:0 8px 24px rgba(0,212,170,0.3)}
-
-/* HAMBURGER */
 .ham-btn{display:none;width:40px;height:40px;background:var(--surface);border:1px solid var(--border2);border-radius:8px;flex-direction:column;align-items:center;justify-content:center;gap:5px;cursor:none}
 .ham-btn span{display:block;width:16px;height:1.5px;background:var(--accent2);border-radius:2px;transition:all .32s cubic-bezier(.4,0,.2,1);transform-origin:center}
 .ham-btn.open span:nth-child(1){transform:translateY(6.5px) rotate(45deg)}
 .ham-btn.open span:nth-child(2){opacity:0}
 .ham-btn.open span:nth-child(3){transform:translateY(-6.5px) rotate(-45deg)}
-
-/* MOBILE MENU */
 .mobile-menu{position:fixed;inset:0;top:var(--nav-h);background:rgba(8,10,16,0.97);backdrop-filter:blur(20px);z-index:99;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;transform:translateY(-100%);opacity:0;transition:transform .4s cubic-bezier(.4,0,.2,1),opacity .4s}
 .mobile-menu.open{transform:translateY(0);opacity:1}
 .mobile-menu .nav-link{font-size:1.4rem;font-weight:600;padding:16px 40px;letter-spacing:.1em}
 
-/* ═══════ HERO ═══════ */
 .hero{position:relative;z-index:5;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:0 32px;text-align:center;overflow:hidden}
-
-/* grid lines bg */
 .hero::before{content:'';position:absolute;inset:0;background-image:linear-gradient(rgba(0,212,170,0.04) 1px,transparent 1px),linear-gradient(90deg,rgba(0,212,170,0.04) 1px,transparent 1px);background-size:80px 80px;mask-image:radial-gradient(ellipse 80% 80% at 50% 50%,black 20%,transparent 80%);-webkit-mask-image:radial-gradient(ellipse 80% 80% at 50% 50%,black 20%,transparent 80%);pointer-events:none}
-
 .hero-eyebrow{display:inline-flex;align-items:center;gap:10px;background:rgba(0,212,170,0.07);border:1px solid rgba(0,212,170,0.2);border-radius:100px;padding:7px 20px;margin-bottom:36px;animation:fadeUp .8s both .2s}
 .hero-eyebrow-dot{width:6px;height:6px;border-radius:50%;background:var(--accent2);box-shadow:0 0 12px rgba(0,245,196,.9);animation:pulse 2.2s ease-in-out infinite}
 @keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(.7)}}
 .hero-eyebrow span{font-size:.7rem;font-weight:600;letter-spacing:.28em;text-transform:uppercase;color:var(--accent2)}
-
-/* NAME ANIMATION */
 .hero-name{margin-bottom:12px;overflow:hidden;animation:fadeUp .9s both .4s}
 .hero-name-line{display:block;font-family:'Playfair Display',serif;font-weight:900;font-size:clamp(3.5rem,10vw,8.5rem);line-height:.9;color:var(--white);letter-spacing:-.01em}
 .hero-name-line.accent-line{color:transparent;-webkit-text-stroke:2px var(--accent);filter:drop-shadow(0 0 30px rgba(0,212,170,0.4))}
-
-/* TYPED */
 .hero-typed-wrap{height:40px;display:flex;align-items:center;justify-content:center;margin-bottom:32px;animation:fadeUp .9s both .6s}
 .hero-typed-prefix{font-size:1rem;color:var(--muted);font-weight:300;margin-right:8px}
 .hero-typed{font-family:'JetBrains Mono',monospace;font-size:1rem;color:var(--accent2);font-weight:400}
 .cursor-blink{animation:blink .8s infinite}
 @keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
-
 .hero-desc{max-width:560px;font-size:1rem;line-height:1.8;color:var(--muted2);font-weight:300;margin-bottom:48px;animation:fadeUp .9s both .7s}
-
 .hero-btns{display:flex;align-items:center;gap:16px;flex-wrap:wrap;justify-content:center;margin-bottom:72px;animation:fadeUp .9s both .8s}
 .btn-primary{display:inline-flex;align-items:center;gap:10px;padding:14px 32px;background:var(--accent);color:#000;font-family:'Space Grotesk',sans-serif;font-size:.82rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;text-decoration:none;border-radius:10px;transition:all .28s;border:none;cursor:none}
 .btn-primary:hover{background:var(--accent2);transform:translateY(-3px);box-shadow:0 12px 36px rgba(0,212,170,.35)}
@@ -110,21 +86,16 @@ body::after{content:'';position:fixed;inset:0;background:radial-gradient(ellipse
 .btn-primary:hover svg{transform:translateX(3px)}
 .btn-outline{display:inline-flex;align-items:center;gap:10px;padding:13px 28px;background:transparent;border:1px solid var(--border2);color:var(--cream);font-family:'Space Grotesk',sans-serif;font-size:.82rem;font-weight:500;letter-spacing:.08em;text-transform:uppercase;text-decoration:none;border-radius:10px;transition:all .28s;cursor:none}
 .btn-outline:hover{border-color:var(--accent);color:var(--accent);background:var(--accent3)}
-
-/* HERO STATS */
 .hero-stats{display:flex;align-items:stretch;background:rgba(255,255,255,0.02);border:1px solid var(--border);border-radius:16px;overflow:hidden;animation:fadeUp .9s both 1s}
 .h-stat{padding:16px 32px;display:flex;flex-direction:column;align-items:center;gap:3px;border-right:1px solid var(--border)}
 .h-stat:last-child{border-right:none}
 .h-stat-n{font-family:'Playfair Display',serif;font-size:1.8rem;font-weight:700;color:var(--accent2);line-height:1}
 .h-stat-l{font-size:.62rem;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--muted)}
-
-/* SCROLL INDICATOR */
 .scroll-hint{position:absolute;bottom:36px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:8px;animation:fadeUp 1s both 1.4s;cursor:none}
 .scroll-hint span{font-size:.6rem;letter-spacing:.3em;text-transform:uppercase;color:var(--muted)}
 .scroll-line{width:1px;height:48px;background:linear-gradient(180deg,var(--accent) 0%,transparent 100%);animation:scrollDrop 2s ease-in-out infinite}
 @keyframes scrollDrop{0%{transform:scaleY(0);transform-origin:top}50%{transform:scaleY(1);transform-origin:top}51%{transform:scaleY(1);transform-origin:bottom}100%{transform:scaleY(0);transform-origin:bottom}}
 
-/* ═══════ SECTION SHARED ═══════ */
 section{position:relative;z-index:5}
 .section-wrap{max-width:1200px;margin:0 auto;padding:0 32px}
 .section-label{display:inline-flex;align-items:center;gap:8px;font-size:.62rem;font-weight:700;letter-spacing:.35em;text-transform:uppercase;color:var(--accent);margin-bottom:10px;opacity:.8}
@@ -132,7 +103,6 @@ section{position:relative;z-index:5}
 .section-title{font-family:'Playfair Display',serif;font-size:clamp(2rem,4.5vw,3.2rem);font-weight:900;color:var(--white);line-height:1.1;margin-bottom:6px}
 .section-title em{font-style:italic;color:var(--accent)}
 
-/* ═══════ ABOUT ═══════ */
 #about{padding:120px 0}
 .about-grid{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center;margin-top:64px}
 .about-visual{position:relative}
@@ -148,22 +118,15 @@ section{position:relative;z-index:5}
 .about-row-val{font-size:.88rem;color:var(--cream)}
 .about-row-val a{color:var(--accent2);text-decoration:none;transition:color .2s}
 .about-row-val a:hover{color:var(--accent)}
-
-/* floating decoration */
 .about-float{position:absolute;top:-20px;right:-20px;width:100px;height:100px;border:1px solid var(--border2);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:2rem;background:var(--bg2);animation:floatY 4s ease-in-out infinite}
 @keyframes floatY{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
-
 .about-text-side{display:flex;flex-direction:column;gap:24px}
 .about-lead{font-size:1.25rem;font-weight:600;color:var(--white);line-height:1.6}
 .about-lead em{color:var(--accent2);font-style:normal}
 .about-body{font-size:.95rem;line-height:1.9;color:var(--muted2);font-weight:300}
-
-/* SKILLS */
 .skills-grid{display:flex;flex-wrap:wrap;gap:10px;margin-top:8px}
 .skill-tag{padding:7px 16px;background:var(--bg3);border:1px solid var(--border);border-radius:100px;font-size:.72rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--muted2);transition:all .2s}
 .skill-tag:hover{border-color:var(--accent);color:var(--accent);background:var(--accent3)}
-
-/* EXPERIENCE TIMELINE */
 .exp-title{font-size:.75rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin-bottom:16px;margin-top:24px}
 .exp-item{display:flex;gap:16px;padding:14px 0;border-bottom:1px solid var(--border)}
 .exp-item:last-child{border-bottom:none}
@@ -171,11 +134,9 @@ section{position:relative;z-index:5}
 .exp-name{font-size:.9rem;font-weight:600;color:var(--white);margin-bottom:3px}
 .exp-sub{font-size:.75rem;color:var(--muted);font-weight:400}
 
-/* ═══════ GAMES ═══════ */
 #games{padding:100px 0}
 .games-head{text-align:center;margin-bottom:64px}
 .game-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:20px}
-
 .gcard{background:var(--bg2);border:1px solid var(--border);border-radius:24px;overflow:hidden;display:flex;flex-direction:column;position:relative;transition:transform .4s cubic-bezier(.34,1.4,.64,1),border-color .3s,box-shadow .3s;animation:cardUp .7s cubic-bezier(.34,1.4,.64,1) both}
 .gcard:nth-child(1){animation-delay:.1s}
 .gcard:nth-child(2){animation-delay:.2s}
@@ -185,24 +146,19 @@ section{position:relative;z-index:5}
 .gcard:hover{transform:translateY(-12px) scale(1.008);border-color:var(--border2);box-shadow:0 28px 72px rgba(0,0,0,.6),0 0 0 1px rgba(0,212,170,.1),0 0 60px rgba(0,212,170,.06)}
 .gcard::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--accent),var(--accent2),transparent);opacity:0;transition:opacity .3s;z-index:3}
 .gcard:hover::before{opacity:1}
-
 .gcard-img{position:relative;overflow:hidden;aspect-ratio:16/9}
 .gcard-img img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .7s ease,filter .7s ease;filter:brightness(.6) saturate(.7)}
 .gcard:hover .gcard-img img{transform:scale(1.1);filter:brightness(.9) saturate(1.2)}
 .gcard-img::after{content:'';position:absolute;inset:0;background:linear-gradient(0deg,var(--bg2) 0%,rgba(13,16,24,.5) 40%,transparent 100%);pointer-events:none;z-index:1}
 .gcard-badge{position:absolute;top:14px;left:14px;z-index:2;padding:4px 12px;background:rgba(0,0,0,.75);border:1px solid var(--border2);border-radius:100px;backdrop-filter:blur(10px);font-size:.58rem;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:var(--accent2)}
 .gcard-num{position:absolute;top:14px;right:14px;z-index:2;font-family:'Playfair Display',serif;font-size:1.4rem;font-weight:700;color:rgba(255,255,255,.12)}
-
 .gcard-body{padding:24px 28px 30px;flex:1;display:flex;flex-direction:column}
 .gcard-title{font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:700;color:var(--white);margin-bottom:8px}
 .gcard-line{width:0;height:2px;background:linear-gradient(90deg,var(--accent),transparent);margin-bottom:12px;border-radius:1px;transition:width .4s ease}
 .gcard:hover .gcard-line{width:48px}
 .gcard-desc{font-size:.83rem;line-height:1.8;font-weight:300;color:var(--muted2);flex:1;margin-bottom:22px}
-
-/* TECH TAGS */
 .gcard-tags{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:20px}
 .gtag{padding:3px 10px;background:var(--bg3);border:1px solid var(--border);border-radius:100px;font-size:.6rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--muted2)}
-
 .play-btn{display:inline-flex;align-items:center;gap:10px;align-self:flex-start;padding:11px 24px;background:transparent;border:1px solid var(--border2);border-radius:100px;color:var(--accent2);font-family:'Space Grotesk',sans-serif;font-size:.75rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;text-decoration:none;position:relative;overflow:hidden;transition:all .3s;cursor:none}
 .play-btn-fill{position:absolute;inset:0;background:var(--accent);transform:scaleX(0);transform-origin:left;transition:transform .32s cubic-bezier(.4,0,.2,1);border-radius:100px}
 .play-btn:hover{color:#000;border-color:transparent;box-shadow:0 0 32px rgba(0,212,170,.3)}
@@ -211,7 +167,6 @@ section{position:relative;z-index:5}
 .play-btn-arrow{display:inline-block;transition:transform .2s}
 .play-btn:hover .play-btn-arrow{transform:translateX(4px)}
 
-/* ═══════ SITES / OTHER PROJECTS ═══════ */
 #projects{padding:100px 0}
 .projects-head{text-align:center;margin-bottom:64px}
 .proj-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px}
@@ -229,13 +184,11 @@ section{position:relative;z-index:5}
 .proj-card:hover .proj-arrow{border-color:var(--accent);color:var(--accent);transform:rotate(-45deg)}
 .proj-row{display:flex;align-items:center;gap:12px}
 
-/* ═══════ CONTACT ═══════ */
 #contact{padding:100px 0 140px}
 .contact-inner{background:var(--bg2);border:1px solid var(--border);border-radius:32px;padding:64px;position:relative;overflow:hidden;max-width:900px;margin:0 auto;margin-top:64px}
 .contact-inner::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--accent),var(--accent2),transparent)}
 .contact-glow{position:absolute;top:-80px;right:-80px;width:300px;height:300px;background:radial-gradient(circle,rgba(0,212,170,.07) 0%,transparent 70%);pointer-events:none}
 .contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center}
-.contact-left{}
 .contact-intro{font-size:.75rem;font-weight:700;letter-spacing:.3em;text-transform:uppercase;color:var(--accent);margin-bottom:12px}
 .contact-title{font-family:'Playfair Display',serif;font-size:2.4rem;font-weight:900;color:var(--white);line-height:1.1;margin-bottom:16px}
 .contact-title em{font-style:italic;color:var(--accent)}
@@ -244,13 +197,10 @@ section{position:relative;z-index:5}
 .contact-link{display:flex;align-items:center;gap:14px;padding:14px 18px;background:var(--bg3);border:1px solid var(--border);border-radius:14px;text-decoration:none;color:var(--cream);transition:all .25s;cursor:none}
 .contact-link:hover{border-color:var(--accent);background:var(--accent3);transform:translateX(6px)}
 .contact-link-icon{width:36px;height:36px;border-radius:10px;background:var(--accent3);display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0}
-.contact-link-text{}
 .contact-link-label{font-size:.6rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin-bottom:2px}
 .contact-link-val{font-size:.88rem;font-weight:500;color:var(--white)}
 .contact-link-arrow{margin-left:auto;color:var(--muted);transition:color .2s,transform .2s;flex-shrink:0}
 .contact-link:hover .contact-link-arrow{color:var(--accent);transform:translateX(4px)}
-
-.contact-right{}
 .contact-form{display:flex;flex-direction:column;gap:16px}
 .form-group{display:flex;flex-direction:column;gap:6px}
 .form-label{font-size:.65rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--muted)}
@@ -262,28 +212,75 @@ section{position:relative;z-index:5}
 .form-submit:hover{background:var(--accent2);transform:translateY(-2px);box-shadow:0 8px 28px rgba(0,212,170,.3)}
 .form-submit svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round}
 
-/* ═══════ FOOTER ═══════ */
 footer{position:relative;z-index:5;padding:28px 32px;border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px}
 .foot-l{font-family:'Space Grotesk',sans-serif;font-size:.78rem;color:var(--muted)}
 .foot-l strong{color:var(--accent2)}
 .foot-r{font-size:.65rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);opacity:.4}
 
-/* ═══════ ANIMATIONS ═══════ */
 @keyframes fadeUp{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:translateY(0)}}
-
 .reveal{opacity:0;transform:translateY(32px);transition:opacity .7s ease,transform .7s ease}
 .reveal.visible{opacity:1;transform:translateY(0)}
 .reveal-delay-1{transition-delay:.1s}
 .reveal-delay-2{transition-delay:.2s}
 .reveal-delay-3{transition-delay:.3s}
 
-/* ═══════ SCROLLBAR ═══════ */
 ::-webkit-scrollbar{width:3px}
 ::-webkit-scrollbar-track{background:var(--bg)}
 ::-webkit-scrollbar-thumb{background:rgba(0,212,170,.25);border-radius:2px}
 ::-webkit-scrollbar-thumb:hover{background:var(--accent)}
 
-/* ═══════ RESPONSIVE ═══════ */
+/* ═══════ APK MODAL — CURSOR FIX ═══════
+   The entire modal and all its children restore the real cursor
+   so users can see where they're clicking / hovering.
+   body { cursor: none } is inherited — we must explicitly
+   override it on the overlay AND every interactive child.
+*/
+.apk-modal-overlay{
+  position:fixed;inset:0;
+  background:rgba(0,0,0,.82);
+  z-index:10000;
+  display:none;
+  align-items:center;justify-content:center;
+  padding:20px;
+  backdrop-filter:blur(8px);
+  /* ✅ FIX: restore system cursor on the dark backdrop */
+  cursor:auto !important;
+}
+.apk-modal-overlay.open{display:flex}
+
+/* ✅ FIX: restore cursor on every element inside the modal */
+.apk-modal-overlay *{cursor:auto !important}
+
+/* ✅ FIX: pointer cursor specifically on clickable elements */
+.apk-modal-overlay a,
+.apk-modal-overlay button,
+.apk-modal-close,
+.apk-dl-btn,
+.apk-cancel-btn{cursor:pointer !important}
+
+.apk-modal{background:var(--bg2);border:1px solid var(--border2);border-radius:28px;padding:36px 32px 32px;max-width:440px;width:100%;position:relative;animation:modalPop .35s cubic-bezier(.34,1.4,.64,1) both}
+@keyframes modalPop{from{opacity:0;transform:scale(.88) translateY(20px)}to{opacity:1;transform:scale(1) translateY(0)}}
+.apk-modal::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--accent),var(--accent2),transparent);border-radius:28px 28px 0 0}
+.apk-modal-close{position:absolute;top:16px;right:16px;width:32px;height:32px;border-radius:50%;background:var(--surface2);border:1px solid var(--border);color:var(--muted);font-size:1rem;display:flex;align-items:center;justify-content:center;transition:all .2s;line-height:1}
+.apk-modal-close:hover{background:var(--bg4);color:var(--white);border-color:var(--border2)}
+.apk-modal-header{display:flex;align-items:center;gap:16px;margin-bottom:22px}
+.apk-modal-icon{width:56px;height:56px;border-radius:16px;background:var(--accent3);border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;font-size:1.8rem;flex-shrink:0}
+.apk-modal-title{font-family:'Playfair Display',serif;font-size:1.4rem;font-weight:700;color:var(--white);margin-bottom:4px}
+.apk-modal-sub{font-size:.68rem;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
+.apk-safe-box{background:rgba(0,212,170,.07);border:1px solid rgba(0,212,170,.22);border-radius:14px;padding:16px 18px;margin-bottom:14px}
+.apk-safe-title{font-size:.8rem;font-weight:700;color:var(--accent2);margin-bottom:10px;display:flex;align-items:center;gap:8px}
+.apk-safe-box ul{font-size:.8rem;color:rgba(0,245,196,.75);line-height:2.1;padding-left:18px;margin:0}
+.apk-safe-box ul li strong{color:var(--accent2)}
+.apk-steps-box{background:var(--bg3);border:1px solid var(--border);border-radius:14px;padding:16px 18px;margin-bottom:22px}
+.apk-steps-title{font-size:.65rem;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);margin-bottom:12px}
+.apk-steps-box ol{font-size:.82rem;color:var(--muted2);line-height:2.2;padding-left:18px;margin:0}
+.apk-steps-box ol strong{color:var(--cream)}
+.apk-dl-btn{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;padding:14px;background:var(--accent);color:#000;font-family:'Space Grotesk',sans-serif;font-size:.82rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;border:none;border-radius:12px;text-decoration:none;transition:all .28s;margin-bottom:10px}
+.apk-dl-btn:hover{background:var(--accent2);box-shadow:0 10px 32px rgba(0,212,170,.35);transform:translateY(-2px)}
+.apk-dl-btn svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0}
+.apk-cancel-btn{width:100%;padding:12px;background:transparent;border:1px solid var(--border);border-radius:12px;color:var(--muted);font-family:'Space Grotesk',sans-serif;font-size:.78rem;font-weight:500;transition:all .22s}
+.apk-cancel-btn:hover{border-color:var(--muted2);color:var(--cream);background:var(--surface)}
+
 @media(max-width:900px){
   .about-grid{grid-template-columns:1fr}
   .contact-grid{grid-template-columns:1fr}
@@ -299,16 +296,14 @@ footer{position:relative;z-index:5;padding:28px 32px;border-top:1px solid var(--
   .h-stat{padding:12px 18px}
   footer{justify-content:center;text-align:center}
   .hero-stats{flex-wrap:wrap;border-radius:14px}
+  .apk-modal{padding:28px 20px 24px}
 }
 </style>
 </head>
 <body>
 
-<!-- Custom Cursor -->
 <div id="cursor"></div>
 <div id="cursor-ring"></div>
-
-<!-- Particles Canvas -->
 <canvas id="particles-canvas"></canvas>
 
 <!-- ══════ NAV ══════ -->
@@ -320,14 +315,12 @@ footer{position:relative;z-index:5;padding:28px 32px;border-top:1px solid var(--
     </div>
     <div class="nav-brand">Praneeth <span>Kumar</span></div>
   </div>
-
   <div class="nav-links">
     <a href="#about" class="nav-link">About</a>
     <a href="#games" class="nav-link">Games</a>
     <a href="#projects" class="nav-link">Projects</a>
     <a href="#contact" class="nav-link">Contact</a>
   </div>
-
   <a href="mailto:praneethkumar89777@gmail.com" class="nav-cta">Hire Me</a>
   <button class="ham-btn" id="hamBtn" aria-label="Toggle menu">
     <span></span><span></span><span></span>
@@ -352,19 +345,15 @@ footer{position:relative;z-index:5;padding:28px 32px;border-top:1px solid var(--
     <span class="hero-eyebrow-dot"></span>
     <span>Unity Game Developer · India</span>
   </div>
-
   <h1 class="hero-name">
     <span class="hero-name-line">PRANEETH</span>
     <span class="hero-name-line accent-line">KUMAR</span>
   </h1>
-
   <div class="hero-typed-wrap">
     <span class="hero-typed-prefix">I build</span>
     <span class="hero-typed" id="typed-text"></span><span class="cursor-blink hero-typed" style="margin-left:2px">|</span>
   </div>
-
   <p class="hero-desc">Unity game developer crafting immersive 2D &amp; 3D experiences for PC and mobile. Passionate about gameplay mechanics, interactive design, and pushing the limits of real-time rendering.</p>
-
   <div class="hero-btns">
     <a href="#games" class="btn-primary">
       Explore My Games
@@ -372,13 +361,11 @@ footer{position:relative;z-index:5;padding:28px 32px;border-top:1px solid var(--
     </a>
     <a href="#contact" class="btn-outline">Let's Connect</a>
   </div>
-
   <div class="hero-stats">
     <div class="h-stat">
       <span class="h-stat-n" id="counter-games">0</span>
       <span class="h-stat-l">Games</span>
     </div>
-    
     <div class="h-stat">
       <span class="h-stat-n">0</span>
       <span class="h-stat-l">Years Exp</span>
@@ -388,7 +375,6 @@ footer{position:relative;z-index:5;padding:28px 32px;border-top:1px solid var(--
       <span class="h-stat-l">Platforms</span>
     </div>
   </div>
-
   <div class="scroll-hint">
     <span>Scroll</span>
     <div class="scroll-line"></div>
@@ -435,7 +421,6 @@ footer{position:relative;z-index:5;padding:28px 32px;border-top:1px solid var(--
         </div>
         <div class="about-float">🕹️</div>
       </div>
-
       <div class="about-text-side reveal reveal-delay-1">
         <div>
           <div class="section-label">Who I Am</div>
@@ -443,7 +428,6 @@ footer{position:relative;z-index:5;padding:28px 32px;border-top:1px solid var(--
         </div>
         <p class="about-lead">I'm a <em>Unity Game Developer</em> from Andhra Pradesh, India — turning ideas into playable experiences that players actually enjoy.</p>
         <p class="about-body">With hands-on experience in both PC and mobile game development, I specialize in designing tight gameplay loops, smooth physics interactions, and polished UIs. Every game I ship is a step toward mastering the craft.</p>
-
         <div>
           <div class="exp-title">Core Skills</div>
           <div class="skills-grid">
@@ -459,7 +443,6 @@ footer{position:relative;z-index:5;padding:28px 32px;border-top:1px solid var(--
             <span class="skill-tag">HTML / CSS / JS</span>
           </div>
         </div>
-
         <div>
           <div class="exp-title">Tools &amp; Platforms</div>
           <div class="exp-item">
@@ -495,10 +478,11 @@ footer{position:relative;z-index:5;padding:28px 32px;border-top:1px solid var(--
     <div class="games-head reveal">
       <div class="section-label" style="justify-content:center">My Work</div>
       <h2 class="section-title">Unity <em>Games</em></h2>
-      <p style="font-size:.9rem;color:var(--muted2);margin-top:10px;font-weight:300">All games playable directly in your browser · No download required</p>
+      <p style="font-size:.9rem;color:var(--muted2);margin-top:10px;font-weight:300">PC games play in your browser · Mobile games install as APK on Android</p>
     </div>
     <div class="game-grid">
 
+      <!-- FLAG RAID -->
       <div class="gcard">
         <div class="gcard-img">
           <img src="images/flag-raid-icon.png" alt="Flag Raid">
@@ -520,6 +504,7 @@ footer{position:relative;z-index:5;padding:28px 32px;border-top:1px solid var(--
         </div>
       </div>
 
+      <!-- SILENT VILLAGE -->
       <div class="gcard">
         <div class="gcard-img">
           <img src="images/SilentVillage.png" alt="Silent Village">
@@ -541,9 +526,49 @@ footer{position:relative;z-index:5;padding:28px 32px;border-top:1px solid var(--
         </div>
       </div>
 
-      
+      <!-- SNOOKER KING -->
+      <div class="gcard">
+        <div class="gcard-img">
+          <img src="images/SnookersGameIcon.png" alt="Snooker King">
+          <div class="gcard-badge">Mobile</div>
+          <div class="gcard-num">03</div>
+        </div>
+        <div class="gcard-body">
+          <div class="gcard-title">Snooker King</div>
+          <div class="gcard-line"></div>
+          <p class="gcard-desc">Classic snooker crafted for mobile — precision physics, realistic ball mechanics, and pure billiards skill.</p>
+          <div class="gcard-tags">
+            <span class="gtag">Unity</span><span class="gtag">2D</span><span class="gtag">Physics</span><span class="gtag">Android</span>
+          </div>
+          <button onclick="openApkModal('Snooker King','🎱','apks/SnookerKing.apk')" class="play-btn" style="border:none;background:transparent">
+            <span class="play-btn-fill"></span>
+            <span class="play-btn-label">Download APK</span>
+            <span class="play-btn-arrow">↓</span>
+          </button>
+        </div>
+      </div>
 
-     
+      <!-- APEX RUNNER -->
+      <div class="gcard">
+        <div class="gcard-img">
+          <img src="images/ApexRunner.png" alt="Apex Runner">
+          <div class="gcard-badge">Mobile</div>
+          <div class="gcard-num">04</div>
+        </div>
+        <div class="gcard-body">
+          <div class="gcard-title">Apex Runner</div>
+          <div class="gcard-line"></div>
+          <p class="gcard-desc">Experience the thrill of endless sprint on mobile. Dodge obstacles, collect power-ups, and chase a high score.</p>
+          <div class="gcard-tags">
+            <span class="gtag">Unity</span><span class="gtag">Endless Runner</span><span class="gtag">Android</span>
+          </div>
+          <button onclick="openApkModal('Apex Runner','🏃','apks/ApexRunner.apk')" class="play-btn" style="border:none;background:transparent">
+            <span class="play-btn-fill"></span>
+            <span class="play-btn-label">Download APK</span>
+            <span class="play-btn-arrow">↓</span>
+          </button>
+        </div>
+      </div>
 
     </div>
   </div>
@@ -558,7 +583,6 @@ footer{position:relative;z-index:5;padding:28px 32px;border-top:1px solid var(--
       <p style="font-size:.9rem;color:var(--muted2);margin-top:10px;font-weight:300">Web apps &amp; tools I've built alongside game dev</p>
     </div>
     <div class="proj-grid">
-
       <a href="https://curvecraftmath.vercel.app" target="_blank" rel="noopener" class="proj-card reveal">
         <div class="proj-thumb">
           <img src="images/CurveCraft (1).png" alt="CurveCraft Math" onerror="this.style.display='none'">
@@ -571,7 +595,6 @@ footer{position:relative;z-index:5;padding:28px 32px;border-top:1px solid var(--
           <div class="proj-arrow">↗</div>
         </div>
       </a>
-
       <a href="https://flamesgame1.vercel.app" target="_blank" rel="noopener" class="proj-card reveal reveal-delay-1">
         <div class="proj-thumb">
           <img src="images/Flames.png" alt="Flames" onerror="this.style.display='none'">
@@ -584,7 +607,6 @@ footer{position:relative;z-index:5;padding:28px 32px;border-top:1px solid var(--
           <div class="proj-arrow">↗</div>
         </div>
       </a>
-
       <a href="https://guess-sketch.onrender.com" target="_blank" rel="noopener" class="proj-card reveal reveal-delay-2">
         <div class="proj-thumb">
           <img src="images/guess-sketch.png" alt="Guess Sketch" onerror="this.style.display='none'">
@@ -597,7 +619,6 @@ footer{position:relative;z-index:5;padding:28px 32px;border-top:1px solid var(--
           <div class="proj-arrow">↗</div>
         </div>
       </a>
-
       <a href="https://valentinegameapp.vercel.app" target="_blank" rel="noopener" class="proj-card reveal reveal-delay-3">
         <div class="proj-thumb">
           <img src="images/Val.png" alt="Valentine" onerror="this.style.display='none'">
@@ -610,7 +631,6 @@ footer{position:relative;z-index:5;padding:28px 32px;border-top:1px solid var(--
           <div class="proj-arrow">↗</div>
         </div>
       </a>
-
     </div>
   </div>
 </section>
@@ -695,22 +715,67 @@ footer{position:relative;z-index:5;padding:28px 32px;border-top:1px solid var(--
   <div class="foot-r">© 2026 · Unity Game Developer</div>
 </footer>
 
+<!-- ══════ APK MODAL ══════ -->
+<div class="apk-modal-overlay" id="apkModal" onclick="if(event.target===this)closeApkModal()">
+  <div class="apk-modal">
+    <button class="apk-modal-close" onclick="closeApkModal()" aria-label="Close">✕</button>
+    <div class="apk-modal-header">
+      <div class="apk-modal-icon" id="apkModalIcon">📱</div>
+      <div>
+        <div class="apk-modal-title" id="apkModalTitle">Game</div>
+        <div class="apk-modal-sub">Android APK · Direct Download</div>
+      </div>
+    </div>
+
+    <div class="apk-safe-box">
+      <div class="apk-safe-title">✅ This APK is 100% safe to install</div>
+      <ul>
+        <li>Built with Unity — <strong>no malware, no trackers, no ads</strong></li>
+        <li>Your phone <strong>will show a security warning</strong> — this is completely normal for APKs outside Play Store</li>
+        <li>Simply tap <strong>"Install anyway"</strong> or <strong>"Allow from this source"</strong> when prompted</li>
+      </ul>
+    </div>
+
+    <div class="apk-steps-box">
+      <div class="apk-steps-title">📋 How to install on Android</div>
+      <ol>
+        <li>Tap <strong>Download APK</strong> below</li>
+        <li>Open the downloaded <strong>.apk</strong> file from your notifications or Downloads folder</li>
+        <li>If you see <em>"Install blocked"</em>, go to <strong>Settings → Install unknown apps</strong> and allow your browser</li>
+        <li>Tap <strong>Install</strong> — the game will appear on your home screen!</li>
+      </ol>
+    </div>
+
+    <a href="#" class="apk-dl-btn" id="apkDownloadLink">
+      <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+      Download APK
+    </a>
+    <button class="apk-cancel-btn" onclick="closeApkModal()">Cancel</button>
+  </div>
+</div>
+
 <script>
 // ── CURSOR ──
-const cursor = document.getElementById('cursor');
-const ring = document.getElementById('cursor-ring');
+const cursor=document.getElementById('cursor');
+const ring=document.getElementById('cursor-ring');
 let mx=0,my=0,rx=0,ry=0;
 document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cursor.style.left=mx+'px';cursor.style.top=my+'px'});
 function animRing(){rx+=(mx-rx)*.12;ry+=(my-ry)*.12;ring.style.left=rx+'px';ring.style.top=ry+'px';requestAnimationFrame(animRing)}
 animRing();
+
+// Hide custom cursor elements when mouse enters modal, restore on leave
+const apkModalEl=document.getElementById('apkModal');
+apkModalEl.addEventListener('mouseenter',()=>{cursor.style.opacity='0';ring.style.opacity='0'});
+apkModalEl.addEventListener('mouseleave',()=>{cursor.style.opacity='1';ring.style.opacity='1'});
+
 document.querySelectorAll('a,button,.gcard,.proj-card').forEach(el=>{
   el.addEventListener('mouseenter',()=>{cursor.style.width='20px';cursor.style.height='20px';ring.style.width='56px';ring.style.height='56px'});
   el.addEventListener('mouseleave',()=>{cursor.style.width='12px';cursor.style.height='12px';ring.style.width='40px';ring.style.height='40px'});
 });
 
 // ── PARTICLES ──
-const canvas = document.getElementById('particles-canvas');
-const ctx = canvas.getContext('2d');
+const canvas=document.getElementById('particles-canvas');
+const ctx=canvas.getContext('2d');
 let particles=[];
 function resizeCanvas(){canvas.width=window.innerWidth;canvas.height=window.innerHeight}
 resizeCanvas();
@@ -746,10 +811,10 @@ setTimeout(typeLoop,1200);
 // ── COUNTERS ──
 function animCounter(el,target,suffix=''){
   let n=0;const step=Math.ceil(target/40);
-  const t=setInterval(()=>{n=Math.min(n+step,target);el.textContent=n+(suffix);if(n>=target)clearInterval(t)},40);
+  const t=setInterval(()=>{n=Math.min(n+step,target);el.textContent=n+suffix;if(n>=target)clearInterval(t)},40);
 }
 const obsC=new IntersectionObserver(entries=>{
-  entries.forEach(e=>{if(e.isIntersecting){animCounter(document.getElementById('counter-games'),4);animCounter(document.getElementById('counter-proj'),7);obsC.disconnect()}});
+  entries.forEach(e=>{if(e.isIntersecting){animCounter(document.getElementById('counter-games'),4);obsC.disconnect()}});
 },{threshold:.5});
 obsC.observe(document.getElementById('counter-games'));
 
@@ -792,6 +857,22 @@ document.querySelectorAll('.gcard').forEach(card=>{
   });
   card.addEventListener('mouseleave',()=>{card.style.transform='';});
 });
+
+// ── APK MODAL ──
+function openApkModal(name, icon, apkPath){
+  document.getElementById('apkModalTitle').textContent = name;
+  document.getElementById('apkModalIcon').textContent = icon;
+  const dlBtn = document.getElementById('apkDownloadLink');
+  dlBtn.href = apkPath;
+  dlBtn.setAttribute('download', name.replace(/\s+/g,'') + '.apk');
+  document.getElementById('apkModal').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeApkModal(){
+  document.getElementById('apkModal').classList.remove('open');
+  document.body.style.overflow = '';
+}
+document.addEventListener('keydown', e => { if(e.key==='Escape') closeApkModal(); });
 </script>
 </body>
 </html>
